@@ -1,19 +1,254 @@
 ---
-import '@/styles/globals.css'
-import { Button } from '@/components/ui/button'
-
+import { Button } from "@/components/ui/button";
+import Layout from "@/layouts/Layout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-		<Button>Hello World</Button>
-	</body>
-</html>
+<Layout title="" description="">
+  <main class="flex-1">
+    <section class="w-full py-12 md:py-24 lg:py-32">
+      <div class="container px-4 md:px-6">
+        <div class="flex flex-col items-center space-y-4 text-center">
+          <div class="space-y-2">
+            <h1
+              class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none"
+            >
+              Welcome to Rotaract Club
+            </h1>
+            <p
+              class="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
+            >
+              We are a group of young leaders dedicated to improving our
+              communities through service.
+            </p>
+          </div>
+          <div class="space-x-4">
+            <a
+              class="inline-flex h-9 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
+              href="#"
+            >
+              Join Us
+            </a>
+            <a
+              class="inline-flex h-9 items-center justify-center rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300"
+              href="#"
+            >
+              Donate
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section
+      class="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800"
+    >
+      <div class="container px-4 md:px-6">
+        <div
+          class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]"
+        >
+          <img
+            alt="Image"
+            class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+            height="310"
+            src="/placeholder.svg"
+            width="550"
+          />
+          <div class="flex flex-col justify-center space-y-4">
+            <div class="space-y-2">
+              <div
+                class="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800"
+              >
+                Notice Board
+              </div>
+              <h2
+                class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
+              >
+                Important Announcements
+              </h2>
+              <p
+                class="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
+              >
+                Stay updated with the latest news and events.
+              </p>
+            </div>
+            <div class="flex flex-col gap-2 min-[400px]:flex-row">
+              <a
+                class="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
+                href="#"
+              >
+                View Announcements
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="w-full py-12 md:py-24 lg:py-32">
+      <div class="container px-4 md:px-6">
+        <div
+          class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]"
+        >
+          <img
+            alt="Image"
+            class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+            height="310"
+            src="/placeholder.svg"
+            width="550"
+          />
+          <div class="flex flex-col justify-center space-y-4">
+            <div class="space-y-2">
+              <div
+                class="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800"
+              >
+                Gallery
+              </div>
+              <h2
+                class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
+              >
+                Our Activities
+              </h2>
+              <p
+                class="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
+              >
+                Explore our past and present activities.
+              </p>
+            </div>
+            <div class="flex flex-col gap-2 min-[400px]:flex-row">
+              <a
+                class="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
+                href="#"
+              >
+                View Gallery
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="w-full py-12 md:py-24 lg:py-32">
+      <div class="container px-4 md:px-6">
+        <div
+          class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]"
+        >
+          <img
+            alt="Image"
+            class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+            height="310"
+            src="/placeholder.svg"
+            width="550"
+          />
+          <div class="flex flex-col justify-center space-y-4">
+            <div class="space-y-2">
+              <div
+                class="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800"
+              >
+                Events
+              </div>
+              <h2
+                class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
+              >
+                Upcoming Activities
+              </h2>
+              <p
+                class="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
+              >
+                Stay updated with our upcoming events.
+              </p>
+            </div>
+            <div class="flex flex-col gap-2 min-[400px]:flex-row">
+              <a
+                class="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
+                href="#"
+              >
+                View Events
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="w-full py-12 md:py-24 lg:py-32">
+      <div class="container px-4 md:px-6">
+        <div
+          class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]"
+        >
+          <img
+            alt="Image"
+            class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+            height="310"
+            src="/placeholder.svg"
+            width="550"
+          />
+          <div class="flex flex-col justify-center space-y-4">
+            <div class="space-y-2">
+              <div
+                class="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800"
+              >
+                Rotaract Structure
+              </div>
+              <h2
+                class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
+              >
+                Our Organization & Structure
+              </h2>
+              <p
+                class="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
+              >
+                Learn more about our club's structure and organization.
+              </p>
+            </div>
+            <div class="flex flex-col gap-2 min-[400px]:flex-row">
+              <a
+                class="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
+                href="#"
+              >
+                View Structure
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="w-full py-12 md:py-24 lg:py-32">
+      <div class="container px-4 md:px-6">
+        <div
+          class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]"
+        >
+          <img
+            alt="Image"
+            class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+            height="310"
+            src="/placeholder.svg"
+            width="550"
+          />
+          <div class="flex flex-col justify-center space-y-4">
+            <div class="space-y-2">
+              <div
+                class="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800"
+              >
+                About Us
+              </div>
+              <h2
+                class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
+              >
+                Our Mission & Values
+              </h2>
+              <p
+                class="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
+              >
+                Learn more about our mission and values.
+              </p>
+            </div>
+            <div class="flex flex-col gap-2 min-[400px]:flex-row">
+              <a
+                class="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
+                href="#"
+              >
+                Learn More
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

@@ -1,0 +1,71 @@
+---
+import "@/styles/globals.css";
+
+export interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900">
+      <header class="px-4 lg:px-6 h-14 flex items-center">
+        <a class="flex items-center justify-center" href="#">
+          <span class="sr-only">Rotaract Club</span>
+        </a>
+        <nav class="ml-auto flex gap-4 sm:gap-6">
+          <a
+            class="text-sm font-medium hover:underline underline-offset-4"
+            href="#"
+          >
+            Home
+          </a>
+          <a
+            class="text-sm font-medium hover:underline underline-offset-4"
+            href="#"
+          >
+            About
+          </a>
+          <a
+            class="text-sm font-medium hover:underline underline-offset-4"
+            href="#"
+          >
+            Events
+          </a>
+          <a
+            class="text-sm font-medium hover:underline underline-offset-4"
+            href="#"
+          >
+            Gallery
+          </a>
+          <a
+            class="text-sm font-medium hover:underline underline-offset-4"
+            href="#"
+          >
+            Contact
+          </a>
+        </nav>
+      </header>
+      <slot />
+      <footer
+        class="py-6 w-full shrink-0 items-center px-4 md:px-6 border-t"
+      >
+        <p class="text-xs text-gray-500 dark:text-gray-400">
+          © 2024 Rotaract Club. All rights reserved.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
