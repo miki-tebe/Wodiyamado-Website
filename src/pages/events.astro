@@ -1,10 +1,60 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
+import { Button } from "@/components/ui/button";
+
+const events = await getCollection("events");
 ---
 
 <Layout
   title="Upcoming Activities"
   description="Stay updated with our upcoming events."
 >
-  <h1>Events!</h1>
+  <section class="w-full py-12 md:py-24 lg:py-32">
+    <div class="container px-4 md:px-6">
+      <div class="flex flex-col items-center space-y-4 text-center">
+        <div class="space-y-2">
+          <h1
+            class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none"
+          >
+            Upcoming Events
+          </h1>
+          <p
+            class="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
+          >
+            Check out our upcoming events and join us in making a difference in
+            our community.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="w-full mb-5 bg-gray-100 dark:bg-gray-800">
+    <div class="container px-4 md:px-6">
+      <div class="grid gap-6 lg:grid-cols-3 lg:gap-12">
+        {
+          events.reverse().map((event) => (
+            <div class="h-full flex flex-col">
+              <img
+                alt="Event Image"
+                class="mx-auto w-full aspect-[4/5] overflow-hidden rounded-xl object-cover object-center sm:w-full"
+                src={event.data.poster}
+              />
+              <div class="space-y-2 py-3">
+                <h2 class="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
+                  {event.data.title}
+                </h2>
+                <p class="max-w-[600px] text-gray-500 md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed dark:text-gray-400">
+                  {event.data.date} - {event.data.time}
+                </p>
+              </div>
+              <a href={`/events/${event.slug}`}>
+                <Button>Learn More</Button>
+              </a>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 </Layout>

@@ -3,7 +3,7 @@ import { config, fields, collection } from "@keystatic/core";
 
 export default config({
   storage: {
-    kind: "cloud",
+    kind: "local",
   },
   cloud: {
     project: "wodiyamado/wodiyamado-website",
@@ -18,11 +18,37 @@ export default config({
         title: fields.slug({ name: { label: "Title" } }),
         content: fields.document({
           label: "Content",
+          description: "Description/Detail of the event",
           formatting: true,
           dividers: true,
           links: true,
           images: true,
         }),
+        poster: fields.image({
+          label: "Poster",
+          description: "The poster for this event",
+          directory: 'public/images/events',
+          publicPath: '/images/events/'
+        }),
+        date: fields.date({
+          label: "Date",
+          description: "The date of the event",
+          validation: {
+            isRequired: true,
+          },
+        }),
+        time: fields.text({
+          label: "Time",
+          description: "The time of the event",
+        }),
+        venue: fields.text({
+          label: "Venue",
+          description: "The venue for this event",
+        }),
+        map: fields.url({
+          label: "Map",
+          description: "Link to the map",
+        })
       },
     }),
   },

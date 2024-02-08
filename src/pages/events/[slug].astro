@@ -1,0 +1,47 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+
+const { slug } = Astro.params;
+if (!slug) throw new Error("Slug not found");
+const event = await getEntry("events", slug);
+
+if (!event) throw new Error("No event found for this slug");
+const { Content } = await event.render();
+
+export async function getStaticPaths() {
+  const events = await getCollection("events");
+  return events.map((event) => ({ params: { slug: event.slug } }));
+}
+---
+
+<Layout
+  title={event.data.title}
+  description={`${event.data.title} - ${event.data.date} - ${event.data.venue}`}
+>
+  <main class="flex-1">
+    <section class="w-full">
+      <div class="container px-4 md:px-6">
+        <div class="flex flex-col space-y-4">
+          <img
+            alt="Event Image"
+            class="w-full h-auto mx-auto rounded-lg shadow-lg md:w-3/4 lg:w-2/3 xl:w-1/2"
+            src={event.data.poster}
+          />
+          <div class="space-y-2 text-center">
+            <h2
+              class="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl"
+            >
+              {event.data.title}
+            </h2>
+            <p
+              class="max-w-[600px] text-gray-500 md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed dark:text-gray-400 mx-auto"
+            >
+              <Content />
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
