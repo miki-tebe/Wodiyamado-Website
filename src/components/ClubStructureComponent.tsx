@@ -6,8 +6,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type { CollectionEntry } from "astro:content";
 
-function ClubStructure({ structures }) {
+function ClubStructure({ structures }: { structures: CollectionEntry<"structures">[] }) {
   const [year, setYear] = useState(new Date().getFullYear().toString());
   const currentStructure = structures.find(
     (structure) => structure.id === year
