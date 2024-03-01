@@ -7,6 +7,7 @@ export interface Props {
 }
 
 const { title, description } = Astro.props;
+const year = new Date().getFullYear();
 ---
 
 <!doctype html>
@@ -63,7 +64,7 @@ const { title, description } = Astro.props;
         class="py-6 w-full shrink-0 items-center px-4 md:px-6 border-t"
       >
         <p class="text-xs text-gray-500 dark:text-gray-400">
-          © 2024 Rotaract Club. All rights reserved.
+          ©{year} Rotaract Club.
         </p>
       </footer>
     </div>
