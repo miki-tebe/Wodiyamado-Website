@@ -5,18 +5,23 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import type { CollectionEntry } from "astro:content";
 
-export default function GalleryCarousel() {
+export default function GalleryCarousel({
+  images,
+}: {
+  images: CollectionEntry<"gallery">[];
+}) {
   return (
     <Carousel className="mx-2">
       <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
+        {images.map((image, index) => (
           <CarouselItem key={index}>
             <img
-              alt={`${index + 1} image`}
+              alt={image?.data.alt}
               className="aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
               height="310"
-              src="/placeholder.svg"
+              src={image?.data.image ?? "/placeholder.svg"}
               width="550"
             />
           </CarouselItem>

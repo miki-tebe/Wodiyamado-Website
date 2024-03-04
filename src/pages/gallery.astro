@@ -1,6 +1,9 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import GalleryCarouselComponent from "@/components/GalleryCarouselComponent";
+import { getCollection } from "astro:content";
+
+const gallery = await getCollection("gallery");
 ---
 
 <Layout
@@ -15,7 +18,7 @@ import GalleryCarouselComponent from "@/components/GalleryCarouselComponent";
         <div
           class="mx-auto flex w-full items-center justify-center p-4 sm:p-8"
         >
-          <GalleryCarouselComponent client:only="react" />
+          <GalleryCarouselComponent images={gallery} client:only="react" />
         </div>
         <div class="flex flex-col justify-center space-y-4">
           <div class="space-y-2">

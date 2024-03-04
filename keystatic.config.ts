@@ -210,5 +210,19 @@ export default config({
         }),
       },
     }),
+    gallery: collection({
+      label: "Gallery",
+      slugField: "alt",
+      path: "src/content/gallery/*",
+      schema: {
+        alt: fields.slug({ name: { label: "Alt Text" } }),
+        image: fields.image({
+          label: "Image",
+          description: "The image for this gallery",
+          directory: "public/images/gallery",
+          publicPath: "/images/gallery/",
+        }),
+      },
+    }),
   },
 });
