@@ -1,10 +1,42 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import GalleryCarouselComponent from "@/components/GalleryCarouselComponent";
 ---
 
 <Layout
   title="Our Activities"
   description="Explore our past and present activities."
 >
-  <h1>Gallery!</h1>
+  <section class="w-full mb-20">
+    <div class="container px-4 md:px-6">
+      <div
+        class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]"
+      >
+        <div
+          class="mx-auto flex w-full items-center justify-center p-4 sm:p-8"
+        >
+          <GalleryCarouselComponent client:only="react" />
+        </div>
+        <div class="flex flex-col justify-center space-y-4">
+          <div class="space-y-2">
+            <div
+              class="inline-block rounded-lg bg-gray-300 px-3 py-1 text-sm dark:bg-gray-800"
+            >
+              Gallery
+            </div>
+            <h2
+              class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
+            >
+              Gallery
+            </h2>
+            <p
+              class="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
+            >
+              Explore our gallery of images from past events and activities.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>
