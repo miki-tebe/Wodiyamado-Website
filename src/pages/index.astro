@@ -1,6 +1,9 @@
 ---
 import { Button } from "@/components/ui/button";
 import Layout from "@/layouts/Layout.astro";
+import { Image } from "astro:assets";
+import placeholder from "../../public/placeholder.svg";
+import gallery from "../../public/gallery.jpg";
 ---
 
 <Layout
@@ -42,10 +45,10 @@ import Layout from "@/layouts/Layout.astro";
         <div
           class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]"
         >
-          <img
+          <Image
             alt="Image"
             class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-            src="/placeholder.svg"
+            src={placeholder}
           />
           <div class="flex flex-col justify-center space-y-4">
             <div class="space-y-2">
@@ -79,10 +82,10 @@ import Layout from "@/layouts/Layout.astro";
         <div
           class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-52 xl:grid-cols-[1fr_550px]"
         >
-          <img
+          <Image
             alt="Image"
             class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-first"
-            src="/placeholder.svg"
+            src={gallery}
           />
           <div class="flex flex-col justify-center space-y-4">
             <div class="space-y-2">
@@ -116,10 +119,10 @@ import Layout from "@/layouts/Layout.astro";
         <div
           class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]"
         >
-          <img
+          <Image
             alt="Image"
             class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-            src="/placeholder.svg"
+            src={placeholder}
           />
           <div class="flex flex-col justify-center space-y-4">
             <div class="space-y-2">
@@ -153,10 +156,10 @@ import Layout from "@/layouts/Layout.astro";
         <div
           class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-52 xl:grid-cols-[1fr_550px]"
         >
-          <img
+          <Image
             alt="Image"
             class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-first"
-            src="/placeholder.svg"
+            src={placeholder}
           />
           <div class="flex flex-col justify-center space-y-4">
             <div class="space-y-2">
@@ -190,10 +193,10 @@ import Layout from "@/layouts/Layout.astro";
         <div
           class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]"
         >
-          <img
+          <Image
             alt="Image"
             class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-            src="/placeholder.svg"
+            src={placeholder}
           />
           <div class="flex flex-col justify-center space-y-4">
             <div class="space-y-2">
