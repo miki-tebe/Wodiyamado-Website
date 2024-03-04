@@ -21,17 +21,17 @@ export async function getStaticPaths() {
 >
   <section class="w-full p-10">
     <div class="container px-4 md:px-6">
-      <div
-        class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-12"
-      >
-        <img
-          alt="Event Image"
-          class="w-full h-auto mx-auto rounded-lg shadow-lg md:w-3/4 lg:w-2/3 xl:w-1/2"
-          src={event.data.poster}
-        />
-        <div class="space-y-2 text-center">
+      <div class=" md:grid grid-cols-12 space-y-4 md:space-y-0 md:space-x-12">
+        <div class="col-span-5">
+          <img
+            alt="Event Image"
+            class="w-full h-auto mx-auto rounded-lg shadow-lg"
+            src={event.data.poster}
+          />
+        </div>
+        <div class="col-span-7 space-y-6 lg:space-y-12">
           <h2
-            class="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl"
+            class="text-2xl font-bold tracking-tighter !leading-tight sm:text-2xl md:text-3xl lg:text-6xl xl:text-7xl"
           >
             {event.data.title}
           </h2>
@@ -40,6 +40,11 @@ export async function getStaticPaths() {
           >
             <Content />
           </p>
+          <div class="space-y-2">
+            <div class="">📅 Date: {event.data.date}</div>
+            <div class="">⏰ Time: {event.data.time}</div>
+          <div class="">📍 &nbsp;&nbsp;Venue: {event.data.venue}</div>
+          </div>
         </div>
       </div>
     </div>
