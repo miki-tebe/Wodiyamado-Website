@@ -35,21 +35,23 @@ const events = await getCollection("events");
         {
           events.reverse().map((event) => (
             <div class="h-full flex flex-col">
-              <img
-                alt="Event Image"
-                class="mx-auto w-full aspect-[4/5] overflow-hidden rounded-xl object-cover object-center sm:w-full"
-                src={event.data.poster}
-              />
-              <div class="space-y-2 py-3">
-                <h2 class="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
-                  {event.data.title}
-                </h2>
-                <p class="max-w-[600px] text-gray-500 md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed dark:text-gray-400">
-                  {event.data.date} - {event.data.time}
-                </p>
-              </div>
-              <a href={`/events/${event.slug}`}>
-                <Button>Learn More</Button>
+              <a href={`/events/${event.slug}`} class="group">
+                <img
+                  alt="Event Image"
+                  class="mx-auto w-full aspect-[4/5] overflow-hidden rounded-xl object-cover object-center sm:w-full"
+                  src={event.data.poster}
+                />
+                <div class="space-y-2 py-3">
+                  <h2 class="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
+                    {event.data.title}
+                  </h2>
+                  <p class="max-w-[600px] text-gray-500 md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed dark:text-gray-400">
+                    {event.data.date} - {event.data.time}
+                  </p>
+                </div>
+                <a href={`/events/${event.slug}`}>
+                  <Button>Learn More</Button>
+                </a>
               </a>
             </div>
           ))
