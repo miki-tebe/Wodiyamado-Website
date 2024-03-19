@@ -18,7 +18,7 @@ const gallery = await getCollection("gallery");
         <div
           class="mx-auto flex w-full items-center justify-center p-4 sm:p-8"
         >
-          <GalleryCarouselComponent images={gallery} client:only="react" />
+          <GalleryCarouselComponent images={gallery} client:load />
         </div>
         <div class="flex flex-col justify-center space-y-4">
           <div class="space-y-2">

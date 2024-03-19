@@ -13,7 +13,7 @@ function ClubStructure({ structures }: { structures: CollectionEntry<"structures
   const currentStructure = structures.find(
     (structure) => structure.id === year
   );
-  console.log(year, structures, currentStructure);
+
   return (
     <section className="w-full mt-5">
       <div className="container px-4 md:px-6">

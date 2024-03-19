@@ -28,7 +28,7 @@ const structures = await getCollection("structures");
             </p>
           </div>
         </div>
-        <ClubStructure structures={structures} client:only="react" />
+        <ClubStructure structures={structures} client:load />
       </div>
     </section>
   </main>

@@ -44,7 +44,7 @@ export default function FAQComponent() {
       <AccordionItem value="item-3">
         <AccordionTrigger>What is rotaract?</AccordionTrigger>
         <AccordionContent>
-          Rotaract originally began as a rotary international youth program i
+          Rotaract originally began as a rotary international youth program in
           1968 at Charlotte north rotary club in Charlotte and has grown into a
           major organization of 11,772 clubs spread around the world and nearly
           170,000 members in 189 countries and geographic areas. It is a service
