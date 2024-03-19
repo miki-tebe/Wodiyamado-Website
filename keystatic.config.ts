@@ -224,5 +224,17 @@ export default config({
         }),
       },
     }),
+    donations: collection({
+      label: "Donations",
+      slugField: "name",
+      path: "src/content/donations/*",
+      schema: {
+        name: fields.slug({ name: { label: "Name" } }),
+        description: fields.text({
+          label: "Description",
+          description: "The description of the donation",
+        }),
+      },
+    }),
   },
 });
