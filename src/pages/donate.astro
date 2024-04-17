@@ -1,5 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import DonationCard from "@/components/DonationCard.tsx";
 import { getCollection } from "astro:content";
 
 const donations = await getCollection("donations");
@@ -38,14 +39,10 @@ const donations = await getCollection("donations");
         >
           {
             donations.map((donation) => (
-              <div class="mx-auto flex w-full items-center justify-center">
-                <div class="space-y-2">
-                  <h3 class="text-lg font-semibold">{donation.data.name}</h3>
-                  <p class="text-gray-500 dark:text-gray-400">
-                    {donation.data.description}
-                  </p>
-                </div>
-              </div>
+              <DonationCard
+                bank={donation.data.name}
+                description={donation.data.description}
+              />
             ))
           }
         </div>

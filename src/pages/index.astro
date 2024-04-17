@@ -5,10 +5,11 @@ import { Image } from "astro:assets";
 import placeholder from "../../public/placeholder.svg";
 import gallery from "../../public/gallery.jpg";
 import event from "../../public/event.jpg";
+import { JoinDialog } from "@/components/JoinDialogComponent";
 ---
 
 <Layout
-  title="Welcome to Rotaract Club"
+  title="Welcome to Rotaract Club of Wodiyamado"
   description="We are a group of young leaders dedicated to improving our communities through service."
 >
   <main class="flex-1">
@@ -19,7 +20,7 @@ import event from "../../public/event.jpg";
             <h1
               class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none"
             >
-              Welcome to Rotaract Club
+              Welcome to Rotaract Club of <br /> Wodiyamado
             </h1>
             <p
               class="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
@@ -28,9 +29,11 @@ import event from "../../public/event.jpg";
               communities through service.
             </p>
           </div>
-          <div class="space-x-4">
+          <div
+            class="md:space-x-4 lg:space-x-4 grid items-center justify-center gap-2 md:inline-block lg:inline-block md:gap-0 lg:gap-0"
+          >
             <a href="#">
-              <Button>Join Us</Button>
+              <JoinDialog client:load />
             </a>
             <a href="/donate">
               <Button variant="outline">Donate</Button>
