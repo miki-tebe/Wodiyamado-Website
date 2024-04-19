@@ -1,0 +1,48 @@
+---
+import { Member, db, eq } from "astro:db";
+
+import MemberList from "@/components/MembersComponent";
+import Layout from "@/layouts/Layout.astro";
+import { MemberDialog } from "@/components/MemberDialogComponent";
+
+const members = await db
+  .select()
+  .from(Member)
+  .where(eq(Member.isApproved, true));
+---
+
+<Layout title="Club Members" description="Members of the club">
+  <main class="flex-1">
+    <section class="w-full py-12 md:py-24 lg:py-32">
+      <div class="container px-4 md:px-6">
+        <div class="flex flex-col items-center space-y-4 text-center">
+          <div class="space-y-2">
+            <h1
+              class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none"
+            >
+              Club Members
+            </h1>
+
+            <p
+              class="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400"
+            >
+              Members of the club and their quotes
+            </p>
+          </div>
+          <div
+            class="md:space-x-4 lg:space-x-4 grid items-center justify-center gap-2 md:inline-block lg:inline-block md:gap-0 lg:gap-0"
+          >
+            <a href="#">
+              <MemberDialog client:load />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="w-full mb-20">
+      <div class="container grid items-center">
+        <MemberList members={members} />
+      </div>
+    </section>
+  </main>
+</Layout>

@@ -10,7 +10,17 @@ const NewMember = defineTable({
   },
 });
 
+const Member = defineTable({
+  columns: {
+    id: column.number({ primaryKey: true }),
+    firstName: column.text(),
+    lastName: column.text(),
+    quote: column.text(),
+    isApproved: column.boolean({ default: false }),
+  },
+});
+
 // https://astro.build/db/config
 export default defineDb({
-  tables: { NewMember },
+  tables: { NewMember, Member },
 });
