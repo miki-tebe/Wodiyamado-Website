@@ -8,17 +8,24 @@ import {
 } from "@/components/ui/select";
 import type { CollectionEntry } from "astro:content";
 
-function ClubStructure({ structures }: { structures: CollectionEntry<"structures">[] }) {
+function ClubStructure({
+  structures,
+}: {
+  structures: CollectionEntry<"structures">[];
+}) {
   const [year, setYear] = useState(new Date().getFullYear().toString());
-  const currentStructure = structures.find(
-    (structure) => structure.id === year
+  const currentStructure = structures.find((structure) =>
+    structure.id.includes(year)
   );
 
   return (
     <section className="w-full mt-5">
       <div className="container px-4 md:px-6">
         <div className="flex justify-center mb-5">
-          <Select defaultValue={year} onValueChange={(value) => setYear(value)}>
+          <Select
+            defaultValue={currentStructure?.data.Year}
+            onValueChange={(value) => setYear(value)}
+          >
             <SelectTrigger className="inline-flex w-[180px] mt-5 yearBtn">
               <SelectValue placeholder="Year" />
             </SelectTrigger>
