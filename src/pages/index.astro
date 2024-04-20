@@ -5,6 +5,8 @@ import { Image } from "astro:assets";
 import placeholder from "../../public/placeholder.svg";
 import gallery from "../../public/gallery.jpg";
 import event from "../../public/event.jpg";
+import members from "../../public/members.jpg";
+import about from "../../public/about.jpg";
 import { JoinDialog } from "@/components/JoinDialogComponent";
 ---
 
@@ -127,7 +129,7 @@ import { JoinDialog } from "@/components/JoinDialogComponent";
           <Image
             alt="Image"
             class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-            src={placeholder}
+            src={members}
           />
           <div class="flex flex-col justify-center space-y-4">
             <div class="space-y-2">
@@ -201,7 +203,7 @@ import { JoinDialog } from "@/components/JoinDialogComponent";
           <Image
             alt="Image"
             class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-            src={placeholder}
+            src={about}
           />
           <div class="flex flex-col justify-center space-y-4">
             <div class="space-y-2">
