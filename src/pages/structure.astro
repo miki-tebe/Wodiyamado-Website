@@ -4,6 +4,7 @@ import ClubStructure from "@/components/ClubStructureComponent.tsx";
 import { getCollection } from "astro:content";
 
 const structures = await getCollection("structures");
+structures.reverse();
 ---
 
 <Layout
@@ -28,7 +29,17 @@ const structures = await getCollection("structures");
             </p>
           </div>
         </div>
-        <ClubStructure structures={structures} client:load />
+        {
+          structures.length > 0 ? (
+            <ClubStructure structures={structures} client:load />
+          ) : (
+            <div class="flex items-center justify-center h-96">
+              <p class="text-lg text-gray-500 dark:text-gray-400">
+                No club structure information available right now.
+              </p>
+            </div>
+          )
+        }
       </div>
     </section>
   </main>
