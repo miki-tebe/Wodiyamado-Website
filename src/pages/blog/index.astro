@@ -1,0 +1,20 @@
+---
+import { getCollection } from "astro:content";
+
+import Layout from "@/layouts/Layout.astro";
+import BlogCard from "@/components/BlogCard.astro";
+import BlogHeader from "@/components/BlogHeader.astro";
+
+const blogs = await getCollection("blogs");
+---
+
+<Layout title="Blog" description="Blog posts">
+  <section class="container py-10">
+    <BlogHeader title="Blog" />
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-9 md:gap-y-11 lg:gap-y-16 lg:gap-x-8"
+    >
+      {blogs.map((blog) => <BlogCard {...blog} />)}
+    </div>
+  </section>
+</Layout>

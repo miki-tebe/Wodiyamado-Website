@@ -1,0 +1,55 @@
+---
+import { Badge } from "@/components/ui/badge";
+import { formatDate } from "@/lib/utils";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+type Props = CollectionEntry<"blogs">;
+
+const blog = Astro.props;
+---
+
+<article class="group space-y-4">
+  <a
+    href={`/blog/${blog.slug}/`}
+    class="flex h-52 group-hover:-translate-y-2 group-hover:shadow-xl transition duration-300"
+  >
+    <Image
+      loading="eager"
+      class="w-full h-full object-cover rounded-xl overflow-hidden"
+      width={720}
+      height={360}
+      src={blog.data.cover}
+      alt="descriptive text"
+      transition:name={`img-${blog.slug}`}
+    />
+  </a>
+
+  <div class="flex items-center justify-between">
+    <a
+      href={`/blog/category/${blog.data.category}`}
+      transition:name={"badge-cat-" + blog.slug}
+    >
+      <Badge className="capitalize">
+        {blog.data.category}
+      </Badge>
+    </a>
+    <span
+      class="font-medium text-muted-foreground"
+      transition:name={"date-" + blog.slug}
+    >
+      {formatDate(blog.data.date)}
+    </span>
+  </div>
+
+  <div>
+    <a href={`/blog/${blog.slug}/`} class="group-hover:underline">
+      <h2
+        class="font-heading text-xl md:text-2xl leading-snug line-clamp-3"
+        transition:name={"title-" + blog.slug}
+      >
+        {blog.data.title}
+      </h2>
+    </a>
+  </div>
+</article>

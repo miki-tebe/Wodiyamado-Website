@@ -236,5 +236,40 @@ export default config({
         }),
       },
     }),
+    blogs: collection({
+      label: "Blogs",
+      slugField: "title",
+      path: "src/content/blogs/*",
+      format: { contentField: "content" },
+      schema: {
+        title: fields.slug({ name: { label: "Title" } }),
+        date: fields.date({
+          label: "Date",
+          description: "The date of the blog",
+          validation: {
+            isRequired: true,
+          },
+          defaultValue: new Date().toISOString(),
+        }),
+        category: fields.text({
+          label: "Category",
+          description: "The category of the blog",
+        }),
+        cover: fields.image({
+          label: "Cover",
+          description: "The cover image for this blog",
+          directory: "public/images/blogs",
+          publicPath: "/images/blogs/",
+        }),
+        content: fields.document({
+          label: "Content",
+          description: "Description/Detail of the blog",
+          formatting: true,
+          dividers: true,
+          links: true,
+          images: true,
+        }),
+      },
+    }),
   },
 });
