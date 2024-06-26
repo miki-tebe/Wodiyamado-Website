@@ -1,7 +1,10 @@
 ---
+import { Image } from "astro:assets";
+
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.css";
+import icon from "../../public/favicon.png";
 
 export interface Props {
   title: string;
@@ -24,8 +27,13 @@ const year = new Date().getFullYear();
   </head>
   <body class="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900">
     <header class="px-4 lg:px-6 h-14 flex items-center">
-      <a class="flex items-center justify-center" href="#">
-        <span class="sr-only">Rotaract Club</span>
+      <a class="flex items-center justify-center" href="/">
+        <Image
+          alt="Logo"
+          class="h-14 w-14"
+          src={icon}
+        />
+        <span class="sr-only">Rac Wodiyamado</span>
       </a>
       <nav class="ml-auto flex">
         <a href="/">
@@ -37,9 +45,7 @@ const year = new Date().getFullYear();
           </Button>
         </a>
         <a href="/blog">
-          <Button variant="link" className="text-sm font-medium">
-            Blog
-          </Button>
+          <Button variant="link" className="text-sm font-medium"> Blog </Button>
         </a>
         <a href="/gallery">
           <Button variant="link" className="text-sm font-medium">
@@ -62,7 +68,7 @@ const year = new Date().getFullYear();
     <Toaster richColors client:only="react" />
     <footer class="py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
       <p class="text-xs text-gray-500 dark:text-gray-400">
-        ©{year} Rotaract Club.
+        ©{year} Rac Wodiyamado.
       </p>
     </footer>
   </body>
