@@ -56,7 +56,6 @@ const { title, description, date, cover, category } = Astro.props.data;
       <h1 class="font-heading text-4xl my-4" transition:name={`title-${slug}`}>
         {title}
       </h1>
-      <p>{description}</p>
       <hr class="my-6" />
       <slot />
     </article>

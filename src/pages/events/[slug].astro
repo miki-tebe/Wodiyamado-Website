@@ -19,9 +19,9 @@ export async function getStaticPaths() {
   title={event.data.title}
   description={`${event.data.title} - ${event.data.date} - ${event.data.venue}`}
 >
-  <section class="w-full p-10">
+  <section class="w-full">
     <div class="container px-4 md:px-6">
-      <div class=" md:grid grid-cols-12 space-y-4 md:space-y-0 md:space-x-12">
+      <div class="md:grid grid-cols-12 space-y-4 md:space-y-0 md:space-x-12">
         <div class="col-span-5">
           <img
             alt="Event Image"
@@ -40,10 +40,10 @@ export async function getStaticPaths() {
           >
             <Content />
           </p>
-          <div class="space-y-2">
+          <div>
             <div class="">📅 Date: {event.data.date}</div>
             <div class="">⏰ Time: {event.data.time}</div>
-          <div class="">📍 &nbsp;&nbsp;Venue: {event.data.venue}</div>
+            <div class="">📍 &nbsp;&nbsp;Venue: {event.data.venue}</div>
           </div>
         </div>
       </div>
