@@ -17,10 +17,23 @@ export const POST: APIRoute = async ({ request }) => {
     birthDate,
     bodPosition,
     referral,
+    skill,
   } = await request.json();
 
   try {
-    formSchema.parse({ name, designation, gender, email, number, username, profession, birthDate, bodPosition, referral });
+    formSchema.parse({
+      name,
+      designation,
+      gender,
+      email,
+      number,
+      username,
+      profession,
+      birthDate,
+      bodPosition,
+      referral,
+      skill,
+    });
   } catch (error) {
     return new Response(
       JSON.stringify({
@@ -42,6 +55,7 @@ export const POST: APIRoute = async ({ request }) => {
       birthDate,
       bodPosition,
       referral,
+      skill,
     });
   } catch (error) {
     return new Response(

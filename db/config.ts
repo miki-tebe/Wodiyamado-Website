@@ -13,6 +13,7 @@ const NewMember = defineTable({
     birthDate: column.text({ optional: true }),
     bodPosition: column.text({ optional: true }),
     referral: column.text({ optional: true }),
+    skill: column.text({ optional: true }),
   },
 });
 

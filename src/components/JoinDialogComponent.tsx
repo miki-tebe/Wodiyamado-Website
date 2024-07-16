@@ -35,6 +35,7 @@ export const formSchema = z.object({
   birthDate: z.string().optional(),
   bodPosition: z.string().optional(),
   referral: z.string().optional(),
+  skill: z.string().optional(),
 });
 
 export function JoinDialog({ openModal }: { openModal: boolean }) {
@@ -70,7 +71,7 @@ export function JoinDialog({ openModal }: { openModal: boolean }) {
       <DialogTrigger asChild>
         <Button>Join Us</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
           <DialogTitle>Join Us</DialogTitle>
           <DialogDescription>We will reach out to you soon</DialogDescription>
@@ -97,7 +98,7 @@ export function JoinDialog({ openModal }: { openModal: boolean }) {
               )}
             />
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="grid gap-4 grid-cols-2">
               <FormField
                 control={form.control}
                 name="gender"
@@ -193,7 +194,7 @@ export function JoinDialog({ openModal }: { openModal: boolean }) {
               )}
             />
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="grid gap-4 grid-cols-2">
               <FormField
                 control={form.control}
                 name="number"
@@ -225,7 +226,7 @@ export function JoinDialog({ openModal }: { openModal: boolean }) {
               />
             </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="grid gap-4 grid-cols-2">
               <FormField
                 control={form.control}
                 name="username"
@@ -255,22 +256,41 @@ export function JoinDialog({ openModal }: { openModal: boolean }) {
               />
             </div>
 
-            <FormField
-              control={form.control}
-              name="referral"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Where did you hear about our club?</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Friends, Social Media, etc."
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <FormField
+                control={form.control}
+                name="skill"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Skills</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Programming, Designing, etc."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="referral"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Where did you hear about our us?</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Friends, Social Media, etc."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             <FormField
               control={form.control}
