@@ -1,4 +1,6 @@
 ---
+export const prerender = false;
+
 import { Button } from "@/components/ui/button";
 import Layout from "@/layouts/Layout.astro";
 import { Image } from "astro:assets";
@@ -8,6 +10,8 @@ import members from "../../public/members.jpg";
 import about from "../../public/about.jpg";
 import structure from "../../public/structure.png";
 import { JoinDialog } from "@/components/JoinDialogComponent";
+
+const openModal = Astro.url.searchParams.get("modal") == "true" ? true : false;
 ---
 
 <Layout
@@ -36,7 +40,7 @@ import { JoinDialog } from "@/components/JoinDialogComponent";
             class="md:space-x-4 lg:space-x-4 grid items-center justify-center gap-2 md:inline-block lg:inline-block md:gap-0 lg:gap-0"
           >
             <a href="#">
-              <JoinDialog client:load />
+              <JoinDialog openModal={openModal} client:load />
             </a>
             <a href="/donate">
               <Button variant="outline">Donate</Button>

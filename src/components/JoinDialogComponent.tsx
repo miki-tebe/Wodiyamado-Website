@@ -30,7 +30,7 @@ export const formSchema = z.object({
   referral: z.string().optional(),
 });
 
-export function JoinDialog() {
+export function JoinDialog({ openModal }: { openModal: boolean }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -65,7 +65,7 @@ export function JoinDialog() {
   }
 
   return (
-    <Dialog>
+    <Dialog defaultOpen={openModal}>
       <DialogTrigger asChild>
         <Button>Join Us</Button>
       </DialogTrigger>
