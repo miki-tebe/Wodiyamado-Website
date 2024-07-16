@@ -279,7 +279,7 @@ export function JoinDialog({ openModal }: { openModal: boolean }) {
                 name="referral"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Where did you hear about our us?</FormLabel>
+                    <FormLabel>Where did you hear about us?</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Friends, Social Media, etc."
