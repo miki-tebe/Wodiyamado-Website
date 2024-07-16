@@ -6,10 +6,21 @@ import { NewMember, db } from "astro:db";
 import { formSchema } from "@/components/JoinDialogComponent.tsx";
 
 export const POST: APIRoute = async ({ request }) => {
-  const { name, number, username, referral } = await request.json();
+  const {
+    name,
+    designation,
+    gender,
+    email,
+    number,
+    username,
+    profession,
+    birthDate,
+    bodPosition,
+    referral,
+  } = await request.json();
 
   try {
-    formSchema.parse({ name, number, username, referral });
+    formSchema.parse({ name, designation, gender, email, number, username, profession, birthDate, bodPosition, referral });
   } catch (error) {
     return new Response(
       JSON.stringify({
@@ -20,7 +31,18 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
-    await db.insert(NewMember).values({ name, number, username, referral });
+    await db.insert(NewMember).values({
+      name,
+      designation,
+      gender,
+      email,
+      number,
+      username,
+      profession,
+      birthDate,
+      bodPosition,
+      referral,
+    });
   } catch (error) {
     return new Response(
       JSON.stringify({
