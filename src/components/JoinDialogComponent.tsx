@@ -82,21 +82,37 @@ export function JoinDialog({ openModal }: { openModal: boolean }) {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-2"
           >
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    Full Name<span className="text-red-600">*</span>
-                  </FormLabel>
-                  <FormControl>
-                    <Input placeholder="Jon Doe" {...field} required />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid gap-4 grid-cols-2">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Full Name<span className="text-red-600">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input placeholder="Jon Doe" {...field} required />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email Address</FormLabel>
+                    <FormControl>
+                      <Input placeholder="jon@gmail.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             <div className="grid gap-4 grid-cols-2">
               <FormField
@@ -179,20 +195,6 @@ export function JoinDialog({ openModal }: { openModal: boolean }) {
                 )}
               />
             </div>
-
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email Address</FormLabel>
-                  <FormControl>
-                    <Input placeholder="jon@gmail.com" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
             <div className="grid gap-4 grid-cols-2">
               <FormField

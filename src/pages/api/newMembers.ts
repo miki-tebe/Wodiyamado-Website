@@ -6,34 +6,10 @@ import { NewMember, db } from "astro:db";
 import { formSchema } from "@/components/JoinDialogComponent.tsx";
 
 export const POST: APIRoute = async ({ request }) => {
-  const {
-    name,
-    designation,
-    gender,
-    email,
-    number,
-    username,
-    profession,
-    birthDate,
-    bodPosition,
-    referral,
-    skill,
-  } = await request.json();
+  const payload = await request.json();
 
   try {
-    formSchema.parse({
-      name,
-      designation,
-      gender,
-      email,
-      number,
-      username,
-      profession,
-      birthDate,
-      bodPosition,
-      referral,
-      skill,
-    });
+    formSchema.parse(payload);
   } catch (error) {
     return new Response(
       JSON.stringify({
@@ -44,18 +20,14 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
-    await db.insert(NewMember).values({
-      name,
-      designation,
-      gender,
-      email,
-      number,
-      username,
-      profession,
-      birthDate,
-      bodPosition,
-      referral,
-      skill,
+    await db.insert(NewMember).values(payload);
+
+    await fetch("https://api.zerosheets.com/v1/zkh", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${import.meta.env.ZERO_SHEETS_BEARER_TOKEN}`,
+      },
+      body: JSON.stringify(payload),
     });
   } catch (error) {
     return new Response(
