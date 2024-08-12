@@ -9,9 +9,17 @@ import db from "@astrojs/db";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react(), tailwind({
-    applyBaseStyles: false
-  }), markdoc(), keystatic(), db()],
+  integrations: [
+    react(),
+    tailwind({
+      applyBaseStyles: false,
+    }),
+    markdoc(),
+    keystatic(),
+    db(),
+  ],
   output: "hybrid",
-  adapter: vercel()
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+  }),
 });
