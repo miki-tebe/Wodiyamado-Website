@@ -2,6 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import GalleryCarouselComponent from "@/components/GalleryCarouselComponent";
 import { getCollection } from "astro:content";
+import { Button } from "@/components/ui/button";
 
 const gallery = await getCollection("gallery");
 ---
@@ -38,8 +39,18 @@ const gallery = await getCollection("gallery");
               Explore our gallery of images from past events and activities.
             </p>
           </div>
+            <a
+            href="https://t.me/racwodiyamadogallery"
+            class="inline-block w-max rounded-lg text-lg font-semibold"
+            target="_blank"
+            >
+            <Button>
+              Visit our Telegram Gallery
+            </Button>
+            </a>
         </div>
       </div>
     </div>
   </section>
+  <div class="mb-36"></div>
 </Layout>
