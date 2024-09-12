@@ -2,6 +2,8 @@
 import { getCollection, getEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 
+import { formatDate } from "@/lib/utils";
+
 const { slug } = Astro.params;
 if (!slug) throw new Error("Slug not found");
 const event = await getEntry("events", slug);
@@ -13,6 +15,14 @@ export async function getStaticPaths() {
   const events = await getCollection("events");
   return events.map((event) => ({ params: { slug: event.slug } }));
 }
+
+function hasEventPassed(eventDate: string | number | Date) {
+  const currentDate = new Date();
+  const eventDateObj = new Date(eventDate);
+  return eventDateObj < currentDate;
+}
+
+const eventPassed = hasEventPassed(event.data.date);
 ---
 
 <Layout
@@ -41,13 +51,19 @@ export async function getStaticPaths() {
             <Content />
           </p>
           <div>
-            <div class="">📅 Date: {event.data.date}</div>
+            <div class="">📅 Date: {formatDate(event.data.date)}</div>
             <div class="">⏰ Time: {event.data.time}</div>
-            <div class="">📍 &nbsp;&nbsp;Venue: {event.data.venue}</div>
+            <div class="">📍&nbsp;Venue: {event.data.venue}</div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <div class="mb-24"></div>
+  <div class="mb-24">
+    {eventPassed && (
+      <div class="fixed inset-x-0 flex items-center justify-center z-50">
+        <p class="text-red-500 text-4xl font-bold">Past Event!!!</p>
+      </div>
+      )}
+  </div>
 </Layout>

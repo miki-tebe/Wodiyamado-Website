@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import { Button } from "@/components/ui/button";
+import { formatDate } from "@/lib/utils";
 
 const events = await getCollection("events");
 ---
@@ -34,7 +35,10 @@ const events = await getCollection("events");
       {
         events.length > 0 ? (
           <div class="grid gap-6 lg:grid-cols-3 lg:gap-12">
-            {events.reverse().map((event) => (
+            {events.map((event) => {
+              const eventDate = new Date(event.data.date);
+              const isPast = eventDate < new Date();
+              return (
               <div class="h-full flex flex-col">
                 <a href={`/events/${event.slug}`} class="group">
                   <img
@@ -44,18 +48,24 @@ const events = await getCollection("events");
                   />
                   <div class="space-y-2 py-3">
                     <h2 class="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
-                      {event.data.title}
+                    {event.data.title}
                     </h2>
                     <p class="max-w-[600px] text-gray-500 md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed dark:text-gray-400">
-                      {event.data.date} - {event.data.time}
+                    {formatDate(event.data.date)} - {event.data.time}
                     </p>
+                    {isPast && (
+                    <p class="text-red-500">This event has passed</p>
+                    )}
                   </div>
-                  <a href={`/events/${event.slug}`}>
-                    <Button>Learn More</Button>
-                  </a>
+                  { !isPast && (
+                    <a href={`/events/${event.slug}`} >
+                      <Button>Learn More</Button>
+                    </a>
+                  )}
                 </a>
               </div>
-            ))}
+              );
+            })}
           </div>
         ) : (
           <div class="flex items-center justify-center mb-16">
