@@ -5,6 +5,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import type { CollectionEntry } from "astro:content";
 
 export default function GalleryCarousel({
@@ -13,7 +14,14 @@ export default function GalleryCarousel({
   images: CollectionEntry<"gallery">[];
 }) {
   return (
-    <Carousel className="mx-2">
+    <Carousel
+      className="mx-2"
+      plugins={[
+        Autoplay({
+          delay: 2000,
+        }),
+      ]}
+    >
       <CarouselContent>
         {images.map((image, index) => (
           <CarouselItem key={index}>
