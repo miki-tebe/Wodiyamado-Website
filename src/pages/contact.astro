@@ -1,5 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import LinkTree from "@/components/LinkTree"; 
 ---
 
 <Layout
@@ -24,6 +25,11 @@ import Layout from "@/layouts/Layout.astro";
             </p>
           </div>
         </div>
+      </div>
+    </section>
+    <section class="w-full pb-12 md:pb-24 bg-gray-100 dark:bg-gray-800">
+      <div class="container lg:px-24">
+        <LinkTree client:load />
       </div>
     </section>
   </main>
