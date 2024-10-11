@@ -208,6 +208,16 @@ export default config({
           directory: "public/images/membershipAndRetentionDirectors",
           publicPath: "/images/membershipAndRetentionDirectors/",
         }),
+        immediatePastPresident: fields.text({
+          label: "Immediate Past President",
+          description: "The immediate past president of the club",
+        }),
+        immediatePastPresident_image: fields.image({
+          label: "Immediate Past President Image",
+          description: "The image of the immediate past president of the club",
+          directory: "public/images/immediatePastPresidents",
+          publicPath: "/images/immediatePastPresidents/",
+        }),
       },
     }),
     gallery: collection({
