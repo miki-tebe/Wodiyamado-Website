@@ -43,6 +43,24 @@ function ClubStructure({
         </div>
         <div className="flex flex-col space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {currentStructure?.data.immediatePastPresident && (
+              <div className="flex flex-col items-center space-y-2">
+                <img
+                  alt="Immediate Past President"
+                  className="w-32 h-32 rounded-full object-cover"
+                  src={
+                    currentStructure?.data.immediatePastPresident_image ??
+                    "/placeholder.svg"
+                  }
+                />
+                <h3 className="text-lg font-semibold">
+                  Immediate Past President
+                </h3>
+                <p className="text-gray-700">
+                  {currentStructure?.data.immediatePastPresident}
+                </p>
+              </div>
+            )}
             {currentStructure?.data.president && (
               <div className="flex flex-col items-center space-y-2">
                 <img
@@ -275,24 +293,6 @@ function ClubStructure({
                 </h3>
                 <p className="text-gray-700">
                   {currentStructure?.data.membershipAndRetentionDirector}
-                </p>
-              </div>
-            )}
-            {currentStructure?.data.immediatePastPresident && (
-              <div className="flex flex-col items-center space-y-2">
-                <img
-                  alt="Immediate Past President"
-                  className="w-32 h-32 rounded-full object-cover"
-                  src={
-                    currentStructure?.data.immediatePastPresident_image ??
-                    "/placeholder.svg"
-                  }
-                />
-                <h3 className="text-lg font-semibold">
-                  Immediate Past President
-                </h3>
-                <p className="text-gray-700">
-                  {currentStructure?.data.immediatePastPresident}
                 </p>
               </div>
             )}
