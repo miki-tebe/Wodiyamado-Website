@@ -15,7 +15,7 @@ export default function MemberList({ members }: { members: Member[] }) {
         <>
           <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
             {members.map((member) => (
-              <Card>
+              <Card key={member.firstName + member.lastName}>
                 <CardHeader className="pb-0">
                   <div className="flex items-center space-x-4">
                     <Avatar className="hidden h-9 w-9 sm:flex">

@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { ViewTransitions } from "astro:transitions";
 
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
@@ -24,15 +25,12 @@ const year = new Date().getFullYear();
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <ViewTransitions />
   </head>
   <body class="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900">
     <header class="px-4 lg:px-6 h-14 flex items-center">
       <a class="flex items-center justify-center" href="/">
-        <Image
-          alt="Logo"
-          class="w-48 h-28"
-          src={icon}
-        />
+        <Image alt="Logo" class="w-48 h-28" src={icon} />
         <span class="sr-only">Rac Wodiyamado</span>
       </a>
       <nav class="ml-auto flex">
