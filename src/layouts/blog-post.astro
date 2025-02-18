@@ -11,7 +11,7 @@ import Layout from "@/layouts/Layout.astro";
 type Props = CollectionEntry<"blogs">;
 
 const slug = Astro.props.slug;
-const { title, description, date, cover, category } = Astro.props.data;
+const { title, description, date, cover, category, author } = Astro.props.data;
 ---
 
 <Layout title={title} description={description}>
@@ -52,6 +52,16 @@ const { title, description, date, cover, category } = Astro.props.data;
         >
           {formatDate(date)}
         </span>
+        {
+          author && (
+            <span
+              class="text-medium text-muted-foreground"
+              transition:name={`author-${slug}`}
+            >
+              Written by {author}
+            </span>
+          )
+        }
       </div>
       <h1 class="font-heading text-4xl my-4" transition:name={`title-${slug}`}>
         {title}

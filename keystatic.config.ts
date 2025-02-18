@@ -271,6 +271,10 @@ export default config({
           directory: "public/images/blogs",
           publicPath: "/images/blogs/",
         }),
+        author: fields.text({
+          label: "Author",
+          description: "The author of the blog",
+        }),
         content: fields.document({
           label: "Content",
           description: "Description/Detail of the blog",
