@@ -19,6 +19,7 @@ export async function getStaticPaths() {
 function hasEventPassed(eventDate: string | number | Date) {
   const currentDate = new Date();
   const eventDateObj = new Date(eventDate);
+  eventDateObj.setHours(23, 59, 59, 999);
   return eventDateObj < currentDate;
 }
 

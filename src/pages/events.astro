@@ -40,8 +40,9 @@ events.sort(
           <div class="grid gap-6 lg:grid-cols-3 lg:gap-12">
             {events.map((event) => {
               const eventDate = new Date(event.data.date);
-              const today = new Date().setHours(0, 0, 0, 0);
-              const isPast = eventDate.getTime() < today;
+              eventDate.setHours(23, 59, 59, 999);
+              const today = new Date();
+              const isPast = eventDate.getTime() < today.getTime();
               return (
                 <div class="h-full flex flex-col">
                   <a href={`/events/${event.slug}`} class="group">
