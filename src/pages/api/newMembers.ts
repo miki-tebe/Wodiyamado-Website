@@ -22,7 +22,7 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     await db.insert(NewMember).values(payload);
 
-    await fetch("https://api.zerosheets.com/v1/zkh", {
+    await fetch("https://api.zerosheets.com/v1/sv5", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${import.meta.env.ZERO_SHEETS_BEARER_TOKEN}`,
