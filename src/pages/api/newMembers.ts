@@ -22,12 +22,25 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     await db.insert(NewMember).values(payload);
 
-    await fetch("https://api.zerosheets.com/v1/sv5", {
+    const transformedPayload = {
+      "Full Name": payload.name,
+      Position: payload.designation,
+      Gender: payload.gender,
+      Email: payload.email,
+      "Phone Number": payload.number,
+      "Telegram Username": payload.username,
+      "Classification/Profession": payload.profession,
+      "Date of Birth": payload.birthDate,
+      bodPosition: payload.bodPosition,
+      "Where did you hear about us?": payload.referral,
+      "What skill set do you have?": payload.skill,
+    };
+    const response = await fetch("https://api.zerosheets.com/v1/sv5", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${import.meta.env.ZERO_SHEETS_BEARER_TOKEN}`,
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(transformedPayload),
     });
   } catch (error) {
     return new Response(
