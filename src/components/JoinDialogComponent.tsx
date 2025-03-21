@@ -28,7 +28,7 @@ export const formSchema = z.object({
   name: z.string().min(1).max(255),
   designation: z.string().optional(),
   gender: z.string().optional(),
-  email: z.string().email().optional(),
+  email: z.string().email(),
   number: z.string().min(10),
   username: z.string().optional(),
   profession: z.string().optional(),
@@ -104,7 +104,9 @@ export function JoinDialog({ openModal }: { openModal: boolean }) {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email Address</FormLabel>
+                    <FormLabel>
+                      Email Address<span className="text-red-600">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="jon@gmail.com" {...field} />
                     </FormControl>
