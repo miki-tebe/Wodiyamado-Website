@@ -5,7 +5,9 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const blogs = await getCollection("blogs");
-const categories = [...new Set(blogs.map((blog) => blog.data.category).flat())];
+const categories = [
+  ...new Set(blogs.map((blog: any) => blog.data.category).flat()),
+];
 
 type Props = {
   title: string;
