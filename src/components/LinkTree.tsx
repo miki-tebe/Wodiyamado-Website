@@ -15,6 +15,7 @@ export default function Component() {
       subtitle: "@racwodiyamado",
       url: "https://instagram.com/racwodiyamado",
       button: { text: "Follow" },
+      className: "col-span-2 xl:col-span-1",
     },
     {
       icon: (
@@ -27,6 +28,7 @@ export default function Component() {
       title: "Rotaract Club of Wodiyamado | Facebook",
       url: "https://www.facebook.com/racwodiyamado?mibextid=ZbWKwL",
       subtitle: "facebook.com",
+      className: "col-span-2 xl:col-span-1",
     },
     {
       icon: (
@@ -39,6 +41,7 @@ export default function Component() {
       title: "Spotify",
       url: "https://podcasters.spotify.com/pod/show/wodiyamado",
       button: { text: "Play", icon: "play" },
+      className: "col-span-2 xl:col-span-1",
     },
     {
       icon: (
@@ -52,6 +55,7 @@ export default function Component() {
       url: "https://tiktok.com/@racwodiyamado",
       subtitle: "@racwodiyamado",
       button: { text: "Follow" },
+      className: "col-span-2 xl:col-span-1",
     },
     {
       icon: (
@@ -64,7 +68,7 @@ export default function Component() {
       title: "Rotaract Club of Wodiyamado | YouTube",
       url: "https://youtube.com/@racwodiyamado",
       button: { text: "Subscribe" },
-      className: "col-span md:col-span-2",
+      className: "col-span-2",
     },
     {
       icon: (
@@ -78,20 +82,20 @@ export default function Component() {
       url: "https://discord.gg/mmEWUt5XrD",
       button: { text: "Join" },
       subtitle: "discord.gg",
-      className: "col-span md:col-span-2",
+      className: "col-span-2",
     },
-    {
-      icon: (
-        <img
-          src="/wheel.png?height=32&width=32"
-          alt="Rotaract icon"
-          className="w-8 h-8"
-        />
-      ),
-      title: "Welcome to Rotaract Club of Wodiyamado",
-      url: "https://racwodiyamado.org",
-      subtitle: "racwodiyamado.org",
-    },
+    // {
+    //   icon: (
+    //     <img
+    //       src="/wheel.png?height=32&width=32"
+    //       alt="Rotaract icon"
+    //       className="w-8 h-8"
+    //     />
+    //   ),
+    //   title: "Welcome to Rotaract Club of Wodiyamado",
+    //   url: "https://racwodiyamado.org",
+    //   subtitle: "racwodiyamado.org",
+    // },
     {
       icon: (
         <SvgIcon
@@ -103,6 +107,8 @@ export default function Component() {
       title: "Rotaract Club of Wodiyamado | LinkedIn",
       url: "https://www.linkedin.com/company/rotaract-club-of-wodiyamado",
       subtitle: "linkedin.com",
+      className: "col-span-2",
+
     },
     {
       icon: (
@@ -118,7 +124,7 @@ export default function Component() {
       description:
         "Wodiyamado was established by 17 young professionals on November 13, 2009 as a community based Rotaract club i...",
       button: { text: "Follow" },
-      className: "col-span-1 md:col-span-2",
+      className: "col-span-2",
     },
     {
       icon: (
@@ -131,6 +137,7 @@ export default function Component() {
       title: "Telegram Channel",
       url: "https://t.me/racwodiyamado",
       subtitle: "t.me",
+      className: "col-span-2",
     },
     {
       icon: (
@@ -143,6 +150,7 @@ export default function Component() {
       title: "Telegram Group",
       url: "https://t.me/rac_wodiyamado",
       subtitle: "t.me",
+      className: "col-span-2",
     },
     {
       icon: (
@@ -155,7 +163,7 @@ export default function Component() {
       title: "Telegram Gallery",
       url: "https://t.me/racwodiyamadogallery",
       subtitle: "t.me",
-      className: "col-span-1 md:col-span-2",
+      className: "col-span-2",
     },
     {
       icon: (
@@ -168,7 +176,7 @@ export default function Component() {
       title: "Chess WM",
       url: "https://t.me/chessWM",
       subtitle: "t.me",
-      className: "col-span-1 md:col-span-2",
+      className: "col-span-2",
     },
   ];
 

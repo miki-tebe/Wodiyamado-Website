@@ -1,10 +1,9 @@
 ---
-import { Image } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
-import  SpeedInsights  from "@vercel/speed-insights/astro"
+import SpeedInsights from "@vercel/speed-insights/astro";
 
-import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
+import Header from "@/components/Header";
 import "@/styles/globals.css";
 import icon from "../../public/favicon.png";
 
@@ -28,41 +27,8 @@ const year = new Date().getFullYear();
     <title>{title}</title>
     <ClientRouter />
   </head>
-  <body class="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900">
-    <header class="px-4 lg:px-6 h-14 flex items-center">
-      <a class="flex items-center justify-center" href="/">
-        <Image alt="Logo" class="w-48 h-28" src={icon} />
-        <span class="sr-only">Rac Wodiyamado</span>
-      </a>
-      <nav class="ml-auto flex">
-        <a href="/">
-          <Button variant="link" className="text-sm font-medium">Home</Button>
-        </a>
-        <a href="/events">
-          <Button variant="link" className="text-sm font-medium">
-            Events
-          </Button>
-        </a>
-        <a href="/blog">
-          <Button variant="link" className="text-sm font-medium"> Blog </Button>
-        </a>
-        <a href="/gallery">
-          <Button variant="link" className="text-sm font-medium">
-            Gallery
-          </Button>
-        </a>
-        <a href="/about">
-          <Button variant="link" className="text-sm font-medium">
-            About
-          </Button>
-        </a>
-        <a href="/contact">
-          <Button variant="link" className="text-sm font-medium">
-            Contact
-          </Button>
-        </a>
-      </nav>
-    </header>
+  <body class="flex flex-col min-h-screen">
+    <Header logo={icon} client:load />
     <slot />
     <Toaster richColors client:only="react" />
     <SpeedInsights />
