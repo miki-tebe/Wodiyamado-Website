@@ -69,7 +69,7 @@ Rotaract Club of Wodiyamado
     <p>Thank you for joining <strong>Rotaract Club of Wodiyamado!</strong> We're thrilled to have you as part of our community.</p>
     <p>Your membership has been accepted, and we’ll be reaching out soon with more details on next steps, upcoming events, and how you can get involved.</p>
     <p>In the meantime, feel free to explore our <a href="https://www.racwodiyamado.org/">website</a> or check out our <a href="https://www.racwodiyamado.org/contact">socials</a> to learn more about what we do.</p>
-    <p>We’d also love to see you at our <strong>weekly Coffee Time</strong>—happening <strong>every Tuesday at <a href="https://maps.app.goo.gl/aUskkM33E7syMySg7">Spanish Café and Restaurant</a> after 5:30 PM!</strong> It’s a great way to meet fellow members, share ideas, and unwind.</p>
+    <p>We’d also love to see you at our <strong>weekly Coffee Time</strong>—happening <strong>every Tuesday at <a href="https://maps.app.goo.gl/q1QirRANFuzE8Bkx5">Karavan Cake Coffee Food | Next to BIS</a> after 5:30 PM!</strong> It’s a great way to meet fellow members, share ideas, and unwind.</p>
     <p>Looking forward to connecting soon!</p>
     <p><strong>Best,</strong></p>
     <p><strong>Membership Extension and Retention Team</strong></p>
