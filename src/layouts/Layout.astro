@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
+import  SpeedInsights  from "@vercel/speed-insights/astro"
 
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
@@ -64,6 +65,7 @@ const year = new Date().getFullYear();
     </header>
     <slot />
     <Toaster richColors client:only="react" />
+    <SpeedInsights />
     <footer class="py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
       <p class="text-xs text-gray-500 dark:text-gray-400">
         ©{year} Rac Wodiyamado.
