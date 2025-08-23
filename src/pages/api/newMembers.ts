@@ -2,7 +2,6 @@ export const prerender = false;
 
 import { Resend } from "resend";
 import type { APIRoute } from "astro";
-import { NewMember, db } from "astro:db";
 
 import { formSchema } from "@/components/JoinDialogComponent.tsx";
 
@@ -23,7 +22,6 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
-    await db.insert(NewMember).values(payload);
 
     const transformedPayload = {
       "Full Name": payload.name,
