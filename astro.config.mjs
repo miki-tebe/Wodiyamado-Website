@@ -3,7 +3,7 @@ import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 import keystatic from "@keystatic/astro";
 import markdoc from "@astrojs/markdoc";
-import vercel from "@astrojs/vercel/serverless";
+import vercel from "@astrojs/vercel";
 
 import db from "@astrojs/db";
 
@@ -18,7 +18,7 @@ export default defineConfig({
     keystatic(),
     db(),
   ],
-  output: "hybrid",
+  output: "server",
   adapter: vercel({
     webAnalytics: { enabled: true },
   }),
