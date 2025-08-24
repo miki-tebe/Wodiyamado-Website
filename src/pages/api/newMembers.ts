@@ -1,9 +1,11 @@
 export const prerender = false;
 
 import { Resend } from "resend";
+import { render } from "@react-email/render";
 import type { APIRoute } from "astro";
 
 import { formSchema } from "@/components/JoinDialogComponent.tsx";
+import WodiyamadoWelcomeEmail from "@/components/WodiyamadoWelcomeEmail";
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
@@ -73,11 +75,13 @@ Rotaract Club of Wodiyamado
     <p><strong>Membership Extension and Retention Team</strong></p>
     <p><strong>Rotaract Club of Wodiyamado</strong></p>
     `;
+
+    const emailHtml = await render(WodiyamadoWelcomeEmail({ firstName: payload.name.split(" ")[0] || "there" }));
     const { error } = await resend.emails.send({
       from: "noreply@racwodiyamado.org",
       to: payload.email,
       subject: "Welcome to Wodiyamado – We’ll Be in Touch Soon!",
-      html: emailBody,
+      html: emailHtml,
     });
     if (error) {
       throw new Error("Failed to send email");
