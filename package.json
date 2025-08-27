@@ -37,6 +37,7 @@
     "date-fns": "^3.6.0",
     "embla-carousel-autoplay": "^8.3.0",
     "embla-carousel-react": "^8.0.0",
+    "framer-motion": "^12.23.12",
     "lucide-astro": "^0.396.0",
     "lucide-react": "^0.315.0",
     "next-themes": "^0.3.0",
