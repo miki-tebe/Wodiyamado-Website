@@ -11,7 +11,7 @@ const blog = Astro.props;
 
 <article class="group space-y-4">
   <a
-    href={`/blog/${blog.slug}/`}
+    href={`/blog/${blog.id}/`}
     class="flex h-52 group-hover:-translate-y-2 group-hover:shadow-xl transition duration-300"
   >
     <Image
@@ -21,14 +21,14 @@ const blog = Astro.props;
       height={360}
       src={blog.data.cover}
       alt="descriptive text"
-      transition:name={`img-${blog.slug}`}
+      transition:name={`img-${blog.id}`}
     />
   </a>
 
   <div class="flex items-center justify-between">
     <a
       href={`/blog/category/${blog.data.category}`}
-      transition:name={"badge-cat-" + blog.slug}
+      transition:name={"badge-cat-" + blog.id}
     >
       <Badge className="capitalize">
         {blog.data.category}
@@ -36,24 +36,24 @@ const blog = Astro.props;
     </a>
     <span
       class="font-medium text-muted-foreground"
-      transition:name={"date-" + blog.slug}
+      transition:name={"date-" + blog.id}
     >
       {formatDate(blog.data.date)}
     </span>
   </div>
 
   <div>
-    <a href={`/blog/${blog.slug}/`} class="group-hover:underline">
+    <a href={`/blog/${blog.id}/`} class="group-hover:underline">
       <h2
         class="font-heading text-xl md:text-2xl leading-snug line-clamp-3"
-        transition:name={"title-" + blog.slug}
+        transition:name={"title-" + blog.id}
       >
         {blog.data.title}
       </h2>
     </a>
     <p
       class="text-sm text-muted-foreground"
-      transition:name={"author-" + blog.slug}
+      transition:name={"author-" + blog.id}
     >
       Written by {blog.data.author}
     </p>

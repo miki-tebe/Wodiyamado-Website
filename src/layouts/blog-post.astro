@@ -10,7 +10,7 @@ import Layout from "@/layouts/Layout.astro";
 
 type Props = CollectionEntry<"blogs">;
 
-const slug = Astro.props.slug;
+const slug = Astro.props.id;
 const { title, description, date, cover, category, author } = Astro.props.data;
 ---
 

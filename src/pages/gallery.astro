@@ -11,14 +11,12 @@ const gallery = await getCollection("gallery");
   title="Our Activities"
   description="Explore our past and present activities."
 >
-  <section class="w-full mb-20">
+  <section class="w-full mb-20 pt-20">
     <div class="container px-4 md:px-6">
       <div
         class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]"
       >
-        <div
-          class="mx-auto flex w-full items-center justify-center p-4 sm:p-8"
-        >
+        <div class="mx-auto flex w-full items-center justify-center p-4 sm:p-8">
           <GalleryCarouselComponent images={gallery} client:load />
         </div>
         <div class="flex flex-col justify-center space-y-4">
@@ -39,15 +37,13 @@ const gallery = await getCollection("gallery");
               Explore our gallery of images from past events and activities.
             </p>
           </div>
-            <a
+          <a
             href="https://t.me/racwodiyamadogallery"
             class="inline-block w-max rounded-lg text-lg font-semibold"
             target="_blank"
-            >
-            <Button>
-              Visit our Telegram Gallery
-            </Button>
-            </a>
+          >
+            <Button> Visit our Telegram Gallery </Button>
+          </a>
         </div>
       </div>
     </div>

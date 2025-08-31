@@ -1,17 +1,32 @@
 ---
 export const prerender = false;
 
-import { Button } from "@/components/ui/button";
 import Layout from "@/layouts/Layout.astro";
-import { Image } from "astro:assets";
 import HeroSection from "@/components/HeroSection";
-import gallery from "../../public/gallery.jpg";
-import event from "../../public/event.jpg";
-import members from "../../public/members.jpg";
-import about from "../../public/about.jpg";
-import structure from "../../public/structure.png";
+import FeaturedEvents from "@/components/FeaturedEvents";
+import LatestBlogs from "@/components/LatestBlogs";
+import { getCollection } from "astro:content";
 
 const openModal = Astro.url.searchParams.get("modal") == "true" ? true : false;
+
+// Get recent events and blogs
+const events = await getCollection("events");
+const blogs = await getCollection("blogs");
+
+// Sort by date and get latest
+const recentEvents = events
+  .sort(
+    (a: any, b: any) =>
+      new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  )
+  .slice(0, 3);
+
+const recentBlogs = blogs
+  .sort(
+    (a: any, b: any) =>
+      new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  )
+  .slice(0, 3);
 ---
 
 <Layout
@@ -20,194 +35,7 @@ const openModal = Astro.url.searchParams.get("modal") == "true" ? true : false;
 >
   <main class="flex-1">
     <HeroSection openModal={openModal} client:load />
-
-    <!-- Rest of the sections remain the same for now -->
-    <section class="w-full py-12 md:py-24 lg:py-32">
-      <div class="container px-4 md:px-6">
-        <div
-          class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]"
-        >
-          <Image
-            alt="Image"
-            class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-            src={event}
-          />
-          <div class="flex flex-col justify-center space-y-4">
-            <div class="space-y-2">
-              <div
-                class="inline-block rounded-lg bg-gray-300 px-3 py-1 text-sm dark:bg-gray-800"
-              >
-                Events
-              </div>
-              <h2
-                class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
-              >
-                Upcoming Activities
-              </h2>
-              <p
-                class="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
-              >
-                Stay updated with our upcoming events.
-              </p>
-            </div>
-            <div class="flex flex-col gap-2 min-[400px]:flex-row">
-              <a href="/events">
-                <Button>View Events</Button>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="w-full py-12 md:py-24 lg:py-32">
-      <div class="container px-4 md:px-6">
-        <div
-          class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-52 xl:grid-cols-[1fr_550px]"
-        >
-          <Image
-            alt="Image"
-            class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-first"
-            src={gallery}
-          />
-          <div class="flex flex-col justify-center space-y-4">
-            <div class="space-y-2">
-              <div
-                class="inline-block rounded-lg bg-gray-300 px-3 py-1 text-sm dark:bg-gray-800"
-              >
-                Gallery
-              </div>
-              <h2
-                class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
-              >
-                Our Activities
-              </h2>
-              <p
-                class="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
-              >
-                Explore our past and present activities.
-              </p>
-            </div>
-            <div class="flex flex-col gap-2 min-[400px]:flex-row">
-              <a href="/gallery">
-                <Button>View Gallery</Button>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section
-      class="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800"
-    >
-      <div class="container px-4 md:px-6">
-        <div
-          class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]"
-        >
-          <Image
-            alt="Image"
-            class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-            src={members}
-          />
-          <div class="flex flex-col justify-center space-y-4">
-            <div class="space-y-2">
-              <div
-                class="inline-block rounded-lg bg-gray-300 px-3 py-1 text-sm dark:bg-gray-800"
-              >
-                Members List
-              </div>
-              <h2
-                class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
-              >
-                Members
-              </h2>
-              <p
-                class="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
-              >
-                Members and their quotes.
-              </p>
-            </div>
-            <div class="flex flex-col gap-2 min-[400px]:flex-row">
-              <a href="/members">
-                <Button>View Members</Button>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="w-full py-12 md:py-24 lg:py-32">
-      <div class="container px-4 md:px-6">
-        <div
-          class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-52 xl:grid-cols-[1fr_550px]"
-        >
-          <Image
-            alt="Image"
-            class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-first"
-            src={structure}
-          />
-          <div class="flex flex-col justify-center space-y-4">
-            <div class="space-y-2">
-              <div
-                class="inline-block rounded-lg bg-gray-300 px-3 py-1 text-sm dark:bg-gray-800"
-              >
-                Rotaract Structure
-              </div>
-              <h2
-                class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
-              >
-                Our Organization & Structure
-              </h2>
-              <p
-                class="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
-              >
-                Learn more about our club's structure and organization.
-              </p>
-            </div>
-            <div class="flex flex-col gap-2 min-[400px]:flex-row">
-              <a href="/structure">
-                <Button>View Structure</Button>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="w-full py-12 md:py-24 lg:py-32">
-      <div class="container px-4 md:px-6">
-        <div
-          class="grid items-center justify-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]"
-        >
-          <Image
-            alt="Image"
-            class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-            src={about}
-          />
-          <div class="flex flex-col justify-center space-y-4">
-            <div class="space-y-2">
-              <div
-                class="inline-block rounded-lg bg-gray-300 px-3 py-1 text-sm dark:bg-gray-800"
-              >
-                About Us
-              </div>
-              <h2
-                class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
-              >
-                Our Mission & Values
-              </h2>
-              <p
-                class="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
-              >
-                Learn more about our mission and values.
-              </p>
-            </div>
-            <div class="flex flex-col gap-2 min-[400px]:flex-row">
-              <a href="/about">
-                <Button>Learn More</Button>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <FeaturedEvents events={recentEvents} client:load />
+    <LatestBlogs blogs={recentBlogs} client:load />
   </main>
 </Layout>

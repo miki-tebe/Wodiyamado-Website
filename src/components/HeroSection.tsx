@@ -46,7 +46,7 @@ export default function HeroSection({ openModal }: HeroSectionProps) {
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary/30 to-primary/90">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/20 to-secondary/10">
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
 

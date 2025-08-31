@@ -7,17 +7,18 @@ import BlogHeader from "@/components/BlogHeader.astro";
 
 const blogs = await getCollection("blogs");
 blogs.sort(
-  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  (a: any, b: any) =>
+    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
 ---
 
 <Layout title="Blog" description="Blog posts">
-  <section class="container py-10">
+  <section class="container py-20">
     <BlogHeader title="Blog" />
     <div
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-9 md:gap-y-11 lg:gap-y-16 lg:gap-x-8"
     >
-      {blogs.map((blog) => <BlogCard {...blog} />)}
+      {blogs.map((blog: any) => <BlogCard {...blog} />)}
     </div>
   </section>
 </Layout>

@@ -1,12 +1,12 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
-import { Button } from "@/components/ui/button";
-import { formatDate } from "@/lib/utils";
+import EventsPage from "@/components/EventsPage";
 
 const events = await getCollection("events");
 events.sort(
-  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  (a: any, b: any) =>
+    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
 ---
 
@@ -14,72 +14,5 @@ events.sort(
   title="Upcoming Activities"
   description="Stay updated with our upcoming events."
 >
-  <section class="w-full py-12 md:py-24 lg:py-32">
-    <div class="container px-4 md:px-6">
-      <div class="flex flex-col items-center space-y-4 text-center">
-        <div class="space-y-2">
-          <h1
-            class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none"
-          >
-            Upcoming Events
-          </h1>
-          <p
-            class="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
-          >
-            Check out our upcoming events and join us in making a difference in
-            our community.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="w-full mb-5 bg-gray-100 dark:bg-gray-800">
-    <div class="container px-4 md:px-6">
-      {
-        events.length > 0 ? (
-          <div class="grid gap-6 lg:grid-cols-3 lg:gap-12">
-            {events.map((event) => {
-              const eventDate = new Date(event.data.date);
-              eventDate.setHours(23, 59, 59, 999);
-              const today = new Date();
-              const isPast = eventDate.getTime() < today.getTime();
-              return (
-                <div class="h-full flex flex-col">
-                  <a href={`/events/${event.slug}`} class="group">
-                    <img
-                      alt="Event Image"
-                      class="mx-auto w-full aspect-[4/5] overflow-hidden rounded-xl object-cover object-center sm:w-full"
-                      src={event.data.poster}
-                    />
-                    <div class="space-y-2 py-3">
-                      <h2 class="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
-                        {event.data.title}
-                      </h2>
-                      <p class="max-w-[600px] text-gray-500 md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed dark:text-gray-400">
-                        {formatDate(event.data.date)} - {event.data.time}
-                      </p>
-                      {isPast && (
-                        <p class="text-red-500">This event has passed</p>
-                      )}
-                    </div>
-                    {!isPast && (
-                      <a href={`/events/${event.slug}`}>
-                        <Button>Learn More</Button>
-                      </a>
-                    )}
-                  </a>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          <div class="flex items-center justify-center mb-16">
-            <p class="text-lg text-gray-500 dark:text-gray-400">
-              No upcoming events at the moment.
-            </p>
-          </div>
-        )
-      }
-    </div>
-  </section>
+  <EventsPage events={events} client:load />
 </Layout>

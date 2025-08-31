@@ -62,7 +62,7 @@ export default function Header({ logo }: HeaderProps) {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg px-2 lg:px-4 h-14 flex items-center justify-between">
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl px-2 lg:px-4 h-14 flex items-center justify-between">
         <a className="flex items-center justify-center text-primary hover:text-secondary" href="/">
           <img alt="Logo" className="w-80 -ml-24" src={logo.src} />
           <span className="sr-only">Rac Wodiyamado</span>
