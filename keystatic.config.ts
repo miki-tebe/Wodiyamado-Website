@@ -3,7 +3,7 @@ import { config, fields, collection } from "@keystatic/core";
 
 export default config({
   storage: {
-    kind: "cloud",
+    kind: "local",
   },
   cloud: {
     project: "wodiyamado/wodiyamado-website",
@@ -16,13 +16,9 @@ export default config({
       format: { contentField: "content" },
       schema: {
         title: fields.slug({ name: { label: "Title" } }),
-        content: fields.document({
+        content: fields.markdoc({
           label: "Content",
           description: "Description/Detail of the event",
-          formatting: true,
-          dividers: true,
-          links: true,
-          images: true,
         }),
         poster: fields.image({
           label: "Poster",
@@ -275,13 +271,9 @@ export default config({
           label: "Author",
           description: "The author of the blog",
         }),
-        content: fields.document({
+        content: fields.markdoc({
           label: "Content",
           description: "Description/Detail of the blog",
-          formatting: true,
-          dividers: true,
-          links: true,
-          images: true,
         }),
       },
     }),
