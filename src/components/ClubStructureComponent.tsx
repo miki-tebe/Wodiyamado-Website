@@ -174,14 +174,14 @@ function ClubStructure({
                 </p>
               </div>
             )}
-            {currentStructure?.data.professionalDevelopmentDirector && (
+            {currentStructure?.data.professionalDevelopmentAndStrategicPlanDirector && (
               <div className="flex flex-col items-center space-y-2">
                 <img
                   alt="Professional Development and Strategic Plan Director"
                   className="w-32 h-32 rounded-full object-cover"
                   src={
                     currentStructure?.data
-                      .professionalDevelopmentDirector_image ??
+                      .professionalDevelopmentAndStrategicPlanDirector_image ??
                     "/placeholder.svg"
                   }
                 />
