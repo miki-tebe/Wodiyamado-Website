@@ -15,7 +15,7 @@ function ClubStructure({
 }) {
   const [year, setYear] = useState(new Date().getFullYear().toString());
   let currentStructure = structures.find((structure) =>
-    structure.id.includes(year)
+    structure.id.startsWith(year)
   );
   if (!currentStructure) {
     currentStructure = structures[0];
@@ -27,7 +27,7 @@ function ClubStructure({
         <div className="flex justify-center mb-5">
           <Select
             defaultValue={currentStructure?.id}
-            onValueChange={(value) => setYear(value)}
+            onValueChange={(value) => setYear(value.split("-")[0])}
           >
             <SelectTrigger className="inline-flex w-[180px] mt-5 yearBtn">
               <SelectValue placeholder="Year" />
