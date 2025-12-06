@@ -79,7 +79,7 @@ export default function Component() {
         />
       ),
       title: "Rotaract Club of Wodiyamado | Discord",
-      url: "https://discord.gg/mmEWUt5XrD",
+      url: "https://discord.gg/4mdy36rQnS",
       button: { text: "Join" },
       subtitle: "discord.gg",
       className: "col-span-2",
