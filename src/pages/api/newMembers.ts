@@ -26,7 +26,7 @@ export const POST: APIRoute = async ({ request }) => {
   try {
 
     const transformedPayload = {
-      "Full Name": payload.name,
+      Name: payload.name,
       Position: payload.designation,
       Gender: payload.gender,
       Email: payload.email,
