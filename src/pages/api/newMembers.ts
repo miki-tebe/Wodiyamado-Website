@@ -38,13 +38,21 @@ export const POST: APIRoute = async ({ request }) => {
       "Where did you hear about us?": payload.referral,
       "What skill set do you have?": payload.skill,
     };
-    await fetch("https://api.zerosheets.com/v1/sv5", {
+    const sheetResponse = await fetch("https://api.zerosheets.com/v1/sv5", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${import.meta.env.ZERO_SHEETS_BEARER_TOKEN}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(transformedPayload),
     });
+
+    if (!sheetResponse.ok) {
+      const errorBody = await sheetResponse.text();
+      throw new Error(
+        `Failed to record member on Google Sheet: ${sheetResponse.status} ${sheetResponse.statusText} - ${errorBody}`
+      );
+    }
     /* 
     Subject: Welcome to Wodiyamado – We’ll Be in Touch Soon!
 
