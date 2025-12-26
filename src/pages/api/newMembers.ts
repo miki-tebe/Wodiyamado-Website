@@ -95,11 +95,14 @@ Rotaract Club of Wodiyamado
       throw new Error("Failed to send email");
     }
   } catch (error) {
+    console.error("Failed to process new member request", error);
+    const message = error instanceof Error ? error.message : "Unexpected error";
+
     return new Response(
       JSON.stringify({
-        message: "error",
+        message,
       }),
-      { status: 400 }
+      { status: 500 }
     );
   }
 
