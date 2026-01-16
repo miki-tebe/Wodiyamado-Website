@@ -148,7 +148,7 @@ export default function Component() {
         />
       ),
       title: "Telegram Group",
-      url: "https://t.me/rac_wodiyamado",
+      url: "https://t.me/wodiyamado",
       subtitle: "t.me",
       className: "col-span-2",
     },
