@@ -64,7 +64,7 @@ export default function Header({ logo }: HeaderProps) {
     <>
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl px-4 h-14 flex items-center justify-between">
         <a className="flex items-center gap-2" href="/">
-          <img alt="Logo" className="h-8 w-auto sm:h-10" src={logo.src} />
+          <img alt="Logo" className="h-16 w-auto sm:h-24" src={logo.src} />
           <span className="sr-only">Rac Wodiyamado</span>
         </a>
 
