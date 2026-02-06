@@ -47,9 +47,9 @@ export default function Header({ logo }: HeaderProps) {
   const navigationItems = [
     { href: '/', label: 'Home' },
     { href: '/events', label: 'Events' },
-    { href: '/blog', label: 'Blog' },
+    { href: '/blogs', label: 'Blogs' },
     { href: '/gallery', label: 'Gallery' },
-    { href: '/about', label: 'About' },
+    { href: '/faq', label: 'FAQs' },
     { href: '/contact', label: 'Contact' },
   ];
 
@@ -62,12 +62,12 @@ export default function Header({ logo }: HeaderProps) {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl px-2 lg:px-4 h-14 flex items-center justify-between">
-        <a className="flex items-center justify-center text-primary hover:text-secondary" href="/">
-          <img alt="Logo" className="w-80 -ml-24" src={logo.src} />
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl px-4 h-14 flex items-center justify-between">
+        <a className="flex items-center gap-2" href="/">
+          <img alt="Logo" className="h-8 w-auto sm:h-10" src={logo.src} />
           <span className="sr-only">Rac Wodiyamado</span>
         </a>
-        
+
         {/* Desktop Navigation */}
         <nav className="hidden sm:flex ml-auto">
           {navigationItems.map((item) => (
@@ -80,7 +80,7 @@ export default function Header({ logo }: HeaderProps) {
         </nav>
 
         {/* Mobile Menu Button */}
-        <button 
+        <button
           ref={buttonRef}
           onClick={toggleMenu}
           className="sm:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
@@ -102,7 +102,7 @@ export default function Header({ logo }: HeaderProps) {
 
       {/* Mobile Navigation Menu */}
       {isMenuOpen && (
-        <div 
+        <div
           ref={menuRef}
           className="sm:hidden bg-white border-b border-gray-200"
         >

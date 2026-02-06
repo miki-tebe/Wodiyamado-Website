@@ -1,33 +1,20 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import LinkTree from "@/components/LinkTree";
+import PageHero from "@/components/PageHero";
 ---
 
 <Layout
   title="Contact Us"
   description="Get in touch with us to learn more about our rotaract club."
 >
-  <main class="">
-    <section class="w-full py-12 md:py-24 lg:py-32">
-      <div class="container px-4 md:px-6">
-        <div class="flex flex-col items-center space-y-4 text-center">
-          <div class="space-y-2">
-            <h1
-              class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none"
-            >
-              Get in Touch
-            </h1>
-            <p
-              class="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400"
-            >
-              We would love to hear from you. If you have any questions or would
-              like to learn more about our club, feel free to reach out to us.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="w-full pb-12 md:pb-24 bg-gray-100 dark:bg-gray-800">
+  <main class="min-h-screen">
+    <PageHero
+      title="Get in Touch"
+      description="We would love to hear from you. If you have any questions or would like to learn more about our club, feel free to reach out to us."
+      client:load
+    />
+    <section class="w-full py-8 md:py-12 bg-gray-50 dark:bg-gray-900">
       <div class="container lg:px-24">
         <LinkTree client:load />
       </div>

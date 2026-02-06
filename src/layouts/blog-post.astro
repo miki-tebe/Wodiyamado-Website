@@ -14,8 +14,8 @@ const slug = Astro.props.id;
 const { title, description, date, cover, category, author } = Astro.props.data;
 ---
 
-<Layout title={title} description={description ?? title}>
-  <div class="relative container max-w-screen-md py-10">
+<Layout title={title} description={description}>
+  <div class="relative container max-w-screen-md mt-12 py-10">
     <button
       onclick="history.back()"
       class={cn(
@@ -30,7 +30,7 @@ const { title, description, date, cover, category, author } = Astro.props.data;
 
     <article class="prose dark:prose-invert max-w-none">
       <a
-        href={`/blog/category/${category}`}
+        href={`/blogs/category/${category}`}
         transition:name={`badge-cat-${slug}`}
       >
         <Badge className="capitalize">

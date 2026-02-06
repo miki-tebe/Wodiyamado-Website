@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
-import EventsHero from './EventsHero';
 import EventsFilterBar from './EventsFilterBar';
 import EventCard from './EventCard';
+import PageHero from '../PageHero';
 
 interface Event {
   slug?: string;
@@ -75,8 +75,11 @@ export default function EventsPage({ events }: EventsPageProps) {
 
   return (
     <div className="min-h-screen">
-      <EventsHero />
-      
+      <PageHero
+        title="Our Events"
+        description="Join us in making a difference through community service, leadership development, and meaningful connections."
+      />
+
       <EventsFilterBar
         categories={categories}
         selectedCategory={selectedCategory}
@@ -96,13 +99,13 @@ export default function EventsPage({ events }: EventsPageProps) {
           </div>
 
           {filteredEvents.length > 0 ? (
-            <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
               {filteredEvents.map((event) => {
                 const eventDate = new Date(event.data.date);
                 eventDate.setHours(23, 59, 59, 999);
                 const isPast = eventDate.getTime() < today.getTime();
                 const isToday = eventDate.toDateString() === today.toDateString();
-                
+
                 return (
                   <EventCard
                     key={event.slug}

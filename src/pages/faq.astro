@@ -1,0 +1,23 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import FAQComponent from "@/components/FAQComponent";
+import PageHero from "@/components/PageHero";
+---
+
+<Layout
+  title="Our Mission & Values"
+  description="Learn more about our mission and values."
+>
+  <div class="min-h-screen">
+    <PageHero
+      title="FAQs"
+      description="Frequently Asked Questions about our club and Rotaract."
+      client:load
+    />
+    <section class="w-full py-8 md:py-12 bg-gray-50 dark:bg-gray-900">
+      <div class="container lg:px-24">
+        <FAQComponent client:load />
+      </div>
+    </section>
+  </div>
+</Layout>

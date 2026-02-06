@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
-import EventsPage from "@/components/EventsPage";
+import EventsPage from "@/components/events/EventsPage";
 
 const events = await getCollection("events");
 events.sort(

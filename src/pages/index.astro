@@ -3,7 +3,7 @@ export const prerender = false;
 
 import Layout from "@/layouts/Layout.astro";
 import HeroSection from "@/components/HeroSection";
-import FeaturedEvents from "@/components/FeaturedEvents";
+import FeaturedEvents from "@/components/events/FeaturedEvents";
 import LatestBlogs from "@/components/LatestBlogs";
 import { getCollection } from "astro:content";
 
@@ -27,6 +27,8 @@ const recentBlogs = blogs
       new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
   )
   .slice(0, 3);
+
+const gallery = await getCollection("gallery");
 ---
 
 <Layout
@@ -34,7 +36,7 @@ const recentBlogs = blogs
   description="We are a group of young leaders dedicated to improving our communities through service."
 >
   <main class="flex-1">
-    <HeroSection openModal={openModal} client:load />
+    <HeroSection gallery={gallery} openModal={openModal} client:load />
     <FeaturedEvents events={recentEvents} client:load />
     <LatestBlogs blogs={recentBlogs} client:load />
   </main>

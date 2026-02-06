@@ -11,7 +11,7 @@ const blog = Astro.props;
 
 <article class="group space-y-4">
   <a
-    href={`/blog/${blog.id}/`}
+    href={`/blogs/${blog.id}/`}
     class="flex h-52 group-hover:-translate-y-2 group-hover:shadow-xl transition duration-300"
   >
     <Image
@@ -27,7 +27,7 @@ const blog = Astro.props;
 
   <div class="flex items-center justify-between">
     <a
-      href={`/blog/category/${blog.data.category}`}
+      href={`/blogs/category/${blog.data.category}`}
       transition:name={"badge-cat-" + blog.id}
     >
       <Badge className="capitalize">
@@ -43,7 +43,7 @@ const blog = Astro.props;
   </div>
 
   <div>
-    <a href={`/blog/${blog.id}/`} class="group-hover:underline">
+    <a href={`/blogs/${blog.id}/`} class="group-hover:underline">
       <h2
         class="font-heading text-xl md:text-2xl leading-snug line-clamp-3"
         transition:name={"title-" + blog.id}

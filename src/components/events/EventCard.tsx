@@ -57,7 +57,7 @@ export default function EventCard({ event, isPast, isToday, isFeatured }: EventC
       className="group block bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700"
     >
       {/* Image container */}
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative aspect-[16/11] overflow-hidden">
         {event.data.poster ? (
           <img
             src={event.data.poster}
@@ -79,19 +79,10 @@ export default function EventCard({ event, isPast, isToday, isFeatured }: EventC
             </Badge>
           )}
         </div>
-
-        {/* Category badge */}
-        {event.data.category && (
-          <div className="absolute top-3 right-3">
-            <Badge variant="outline" className="bg-white/90 text-primary border-primary">
-              {event.data.category}
-            </Badge>
-          </div>
-        )}
       </div>
 
       {/* Content */}
-      <div className="p-6 space-y-4">
+      <div className="p-6 space-y-2">
         {/* Title */}
         <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors duration-200 line-clamp-2">
           {event.data.title}
