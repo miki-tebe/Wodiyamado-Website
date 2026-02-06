@@ -2,6 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import ClubStructure from "@/components/ClubStructureComponent.tsx";
 import { getCollection } from "astro:content";
+import PageHero from "@/components/PageHero";
 
 const structures = await getCollection("structures");
 structures.reverse();
@@ -12,23 +13,13 @@ structures.reverse();
   description="Learn more about our club's structure and organization."
 >
   <main class="flex-1">
-    <section class="w-full py-12 md:py-24 lg:py-32">
+    <PageHero
+      title="Club Structure"
+      description="Here are the board members and directors who lead our club's initiatives."
+      client:load
+    />
+    <section class="w-full">
       <div class="container px-4 md:px-6">
-        <div class="flex flex-col items-center space-y-4 text-center">
-          <div class="space-y-2">
-            <h1
-              class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none"
-            >
-              Club Structure
-            </h1>
-
-            <p
-              class="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400"
-            >
-              Learn more about our club's structure and organization.
-            </p>
-          </div>
-        </div>
         {
           structures.length > 0 ? (
             <ClubStructure structures={structures} client:load />
