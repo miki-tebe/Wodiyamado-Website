@@ -7,20 +7,16 @@ import FeaturedEvents from "@/components/events/FeaturedEvents";
 import StructurePreview from "@/components/StructurePreview";
 import LatestBlogs from "@/components/LatestBlogs";
 import { getCollection } from "astro:content";
+import { getPublicEvents } from "@/lib/events-store";
 
 const openModal = Astro.url.searchParams.get("modal") == "true" ? true : false;
 
 // Get recent events and blogs
-const events = await getCollection("events");
 const blogs = await getCollection("blogs");
+const events = await getPublicEvents();
 
 // Sort by date and get latest
-const recentEvents = events
-  .sort(
-    (a, b) =>
-      b.data.date.getTime() - a.data.date.getTime()
-  )
-  .slice(0, 3);
+const recentEvents = events.slice(0, 3);
 
 const recentBlogs = blogs
   .sort(

@@ -15,7 +15,6 @@ export default defineConfig({
     }),
     markdoc(),
     keystatic(),
-    // db(),
   ],
   output: "server",
   adapter: vercel({

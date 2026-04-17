@@ -1,11 +1,10 @@
-import type { CollectionEntry } from "astro:content";
+import { parseISO } from "date-fns";
 import { Button } from "@/components/ui/button";
 import EventCard from "./EventCard";
-
-type Event = CollectionEntry<"events">;
+import type { PublicEvent } from "@/lib/event-types";
 
 interface FeaturedEventsProps {
-  events: Event[];
+  events: PublicEvent[];
 }
 
 export default function FeaturedEvents({ events }: FeaturedEventsProps) {
@@ -26,7 +25,7 @@ export default function FeaturedEvents({ events }: FeaturedEventsProps) {
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {events.map((eventItem) => {
-            const eventDate = eventItem.data.date;
+            const eventDate = parseISO(eventItem.date);
             eventDate.setHours(23, 59, 59, 999);
             const isPast = eventDate.getTime() < today.getTime();
             const isToday = eventDate.toDateString() === today.toDateString();

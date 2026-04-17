@@ -1,12 +1,11 @@
-import type { CollectionEntry } from 'astro:content';
+import { parseISO } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Clock, MapPin, Users } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
-
-type Event = CollectionEntry<'events'>;
+import type { PublicEvent } from '@/lib/event-types';
 
 interface EventCardProps {
-  event: Event;
+  event: PublicEvent;
   isPast: boolean;
   isToday: boolean;
   isFeatured?: boolean;
@@ -29,7 +28,7 @@ export default function EventCard({ event, isPast, isToday, isFeatured }: EventC
   const getDaysUntilEvent = () => {
     if (isPast) return null;
 
-    const eventDate = event.data.date;
+    const eventDate = parseISO(event.date);
     const today = new Date();
     const diffTime = eventDate.getTime() - today.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -47,10 +46,10 @@ export default function EventCard({ event, isPast, isToday, isFeatured }: EventC
     >
       {/* Image container */}
       <div className="relative aspect-[16/11] overflow-hidden">
-        {event.data.poster ? (
+        {event.poster ? (
           <img
-            src={event.data.poster}
-            alt={event.data.title}
+            src={event.poster}
+            alt={event.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
@@ -74,13 +73,13 @@ export default function EventCard({ event, isPast, isToday, isFeatured }: EventC
       <div className="p-6 space-y-2">
         {/* Title */}
         <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors duration-200 line-clamp-2">
-          {event.data.title}
+          {event.title}
         </h3>
 
         {/* Description */}
-        {event.data.description && (
+        {event.description && (
           <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2">
-            {event.data.description}
+            {event.description}
           </p>
         )}
 
@@ -89,28 +88,28 @@ export default function EventCard({ event, isPast, isToday, isFeatured }: EventC
           {/* Date and Time */}
           <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
             <Calendar className="w-4 h-4" />
-            <span>{formatDate(new Date(event.data.date))}</span>
-            {event.data.time && (
+            <span>{formatDate(parseISO(event.date))}</span>
+            {event.time && (
               <>
                 <Clock className="w-4 h-4 ml-2" />
-                <span>{event.data.time}</span>
+                <span>{event.time}</span>
               </>
             )}
           </div>
 
           {/* Location */}
-          {(event.data.venue || event.data.location) && (
+          {(event.venue || event.location) && (
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
               <MapPin className="w-4 h-4" />
-              <span className="line-clamp-1">{event.data.venue || event.data.location}</span>
+              <span className="line-clamp-1">{event.venue || event.location}</span>
             </div>
           )}
 
           {/* Participants */}
-          {event.data.maxParticipants && (
+          {event.maxParticipants && (
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
               <Users className="w-4 h-4" />
-              <span>Max {event.data.maxParticipants} participants</span>
+              <span>Max {event.maxParticipants} participants</span>
             </div>
           )}
         </div>

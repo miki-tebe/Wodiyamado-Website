@@ -32,6 +32,14 @@ npm run dev
 
 Explain how to use your project here.
 
+## Environment
+
+For the Typefully webhook and LibSQL event store, set:
+
+- `LIBSQL_URL` or `TURSO_DATABASE_URL`
+- `LIBSQL_AUTH_TOKEN` or `TURSO_AUTH_TOKEN`
+- `TYPEFULLY_WEBHOOK_SECRET`
+
 ## Contributing
 
 1. Fork the repository.

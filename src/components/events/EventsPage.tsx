@@ -1,13 +1,12 @@
-import type { CollectionEntry } from 'astro:content';
 import { useState, useMemo } from 'react';
+import { parseISO } from 'date-fns';
 import EventsFilterBar from './EventsFilterBar';
 import EventCard from './EventCard';
 import PageHero from '../PageHero';
-
-type Event = CollectionEntry<'events'>;
+import type { PublicEvent } from '@/lib/event-types';
 
 interface EventsPageProps {
-  events: Event[];
+  events: PublicEvent[];
 }
 
 export default function EventsPage({ events }: EventsPageProps) {
@@ -19,19 +18,19 @@ export default function EventsPage({ events }: EventsPageProps) {
 
   // Get unique categories
   const categories = useMemo(() => {
-    return [...new Set(events.map(event => event.data.category).filter(Boolean))] as string[];
+    return [...new Set(events.map((event) => event.category).filter(Boolean))] as string[];
   }, [events]);
 
   // Filter events based on filters
   const filteredEvents = useMemo(() => {
     return events.filter(event => {
       // Category filter
-      const matchesCategory = selectedCategory === 'all' || event.data.category === selectedCategory;
+      const matchesCategory = selectedCategory === 'all' || event.category === selectedCategory;
 
       // Status filter
       let matchesStatus = true;
       if (selectedStatus !== 'all') {
-        const eventDate = event.data.date;
+        const eventDate = parseISO(event.date);
         eventDate.setHours(23, 59, 59, 999);
         const isPast = eventDate.getTime() < today.getTime();
         const isToday = eventDate.toDateString() === today.toDateString();
@@ -90,7 +89,7 @@ export default function EventsPage({ events }: EventsPageProps) {
           {filteredEvents.length > 0 ? (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
               {filteredEvents.map((event) => {
-                const eventDate = new Date(event.data.date);
+                const eventDate = parseISO(event.date);
                 eventDate.setHours(23, 59, 59, 999);
                 const isPast = eventDate.getTime() < today.getTime();
                 const isToday = eventDate.toDateString() === today.toDateString();

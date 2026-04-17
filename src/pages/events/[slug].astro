@@ -1,36 +1,45 @@
 ---
-import { getCollection, getEntry, render } from "astro:content";
+export const prerender = false;
+
+import { render } from "astro:content";
+import { parseISO } from "date-fns";
+
 import Layout from "@/layouts/Layout.astro";
 import { formatDate } from "@/lib/utils";
+import { getEventPageRecordBySlug } from "@/lib/events-store";
 
 const { slug } = Astro.params;
-if (!slug) throw new Error("Slug not found");
-const event = await getEntry("events", slug);
-
-if (!event) throw new Error("No event found for this slug");
-const { Content } = await render(event);
-
-export async function getStaticPaths() {
-  const events = await getCollection("events");
-  return events.map((eventItem: any) => ({ params: { slug: eventItem.slug } }));
+if (!slug) {
+  throw new Error("Slug not found");
 }
 
-function hasEventPassed(eventDate: string | number | Date) {
+const pageRecord = await getEventPageRecordBySlug(slug);
+
+if (!pageRecord) {
+  Astro.response.status = 404;
+}
+
+const event = pageRecord?.event;
+const contentEntry = pageRecord?.kind === "content" ? pageRecord.entry : null;
+const dbBody = pageRecord?.kind === "typefully" ? pageRecord.body : null;
+const { Content } = contentEntry ? await render(contentEntry) : { Content: null };
+
+function hasEventPassed(eventDate: string) {
   const currentDate = new Date();
-  const eventDateObj = new Date(eventDate);
+  const eventDateObj = parseISO(eventDate);
   eventDateObj.setHours(23, 59, 59, 999);
   return eventDateObj < currentDate;
 }
 
-function isEventToday(eventDate: string | number | Date) {
+function isEventToday(eventDate: string) {
   const currentDate = new Date();
-  const eventDateObj = new Date(eventDate);
+  const eventDateObj = parseISO(eventDate);
   return eventDateObj.toDateString() === currentDate.toDateString();
 }
 
-function getDaysUntilEvent(eventDate: string | number | Date) {
+function getDaysUntilEvent(eventDate: string) {
   const currentDate = new Date();
-  const eventDateObj = new Date(eventDate);
+  const eventDateObj = parseISO(eventDate);
   const diffTime = eventDateObj.getTime() - currentDate.getTime();
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
@@ -41,225 +50,209 @@ function getDaysUntilEvent(eventDate: string | number | Date) {
   return `In ${Math.ceil(diffDays / 30)} months`;
 }
 
-const eventPassed = hasEventPassed(event.data.date);
-const eventToday = isEventToday(event.data.date);
-const daysUntilEvent = getDaysUntilEvent(event.data.date);
+const eventPassed = event ? hasEventPassed(event.date) : false;
+const eventToday = event ? isEventToday(event.date) : false;
+const daysUntilEvent = event ? getDaysUntilEvent(event.date) : "";
 ---
 
 <Layout
-  title={event.data.title}
-  description={`${event.data.title} - ${event.data.date} - ${event.data.venue || "Location TBA"}`}
+  title={event?.title || "Event not found"}
+  description={event ? `${event.title} - ${event.date} - ${event.venue || "Location TBA"}` : "The requested event could not be found."}
 >
-  <!-- Hero Section -->
-  <section
-    class="relative w-full py-16 md:py-24 bg-gradient-to-br from-primary/5 via-primary/10 to-secondary/5"
-  >
-    <div class=`container px-4 md:px-6 ${eventPassed ? 'pt-14': ''}`>
-      <div class="max-w-6xl mx-auto">
-        <!-- Event Header -->
-        <div class="grid lg:grid-cols-2 gap-12 items-start">
-          <!-- Event Image -->
-          <div class="relative">
-            {
-              event.data.poster ? (
-                <img
-                  alt={`${event.data.title} poster`}
-                  class="w-full h-auto rounded-2xl shadow-2xl"
-                  src={event.data.poster}
-                />
-              ) : (
-                <div class="w-full aspect-[4/3] bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl flex items-center justify-center">
-                  <div class="text-center">
-                    <div class="text-6xl mb-4">📅</div>
-                    <p class="text-gray-500">No image available</p>
-                  </div>
-                </div>
-              )
-            }
-
-            <!-- Event Status Badge -->
-            <div class="absolute top-4 left-4">
-              {
-                eventPassed ? (
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-500 text-white">
-                    Past Event
-                  </span>
-                ) : eventToday ? (
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-500 text-white animate-pulse">
-                    Today!
-                  </span>
+  {
+    event ? (
+      <section
+        class="relative w-full py-16 md:py-24 bg-gradient-to-br from-primary/5 via-primary/10 to-secondary/5"
+      >
+        <div class={`container px-4 md:px-6 ${eventPassed ? "pt-14" : ""}`}>
+          <div class="max-w-6xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
+              <div class="relative">
+                {event.poster ? (
+                  <img
+                    alt={`${event.title} poster`}
+                    class="w-full h-auto rounded-2xl shadow-2xl"
+                    src={event.poster}
+                  />
                 ) : (
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-500 text-white">
-                    {daysUntilEvent}
-                  </span>
-                )
-              }
-            </div>
-
-            <!-- Category Badge -->
-            {
-              event.data.category && (
-                <div class="absolute top-4 right-4">
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white/90 text-primary border border-primary/20">
-                    {event.data.category}
-                  </span>
-                </div>
-              )
-            }
-          </div>
-
-          <!-- Event Details -->
-          <div class="space-y-8">
-            <div>
-              <h1
-                class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight mb-4"
-              >
-                {event.data.title}
-              </h1>
-            </div>
-
-            <!-- Event Info Cards -->
-            <div class="grid gap-4">
-              <!-- Date & Time -->
-              <div
-                class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700"
-              >
-                <div class="flex items-center gap-3 mb-3">
-                  <div
-                    class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center"
-                  >
-                    <span class="text-2xl">📅</span>
+                  <div class="w-full aspect-[4/3] bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl flex items-center justify-center">
+                    <div class="text-center">
+                      <div class="text-6xl mb-4">📅</div>
+                      <p class="text-gray-500">No image available</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 class="font-semibold text-gray-900 dark:text-white">
-                      Date & Time
-                    </h3>
-                  </div>
-                </div>
-                <div class="space-y-2 text-gray-600 dark:text-gray-400">
-                  <div class="flex items-center gap-2">
-                    <span class="font-medium">Date:</span>
-                    <span>{formatDate(new Date(event.data.date))}</span>
-                  </div>
+                )}
+
+                <div class="absolute top-4 left-4">
                   {
-                    event.data.time && (
-                      <div class="flex items-center gap-2">
-                        <span class="font-medium">Time:</span>
-                        <span>{event.data.time}</span>
-                      </div>
+                    eventPassed ? (
+                      <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-500 text-white">
+                        Past Event
+                      </span>
+                    ) : eventToday ? (
+                      <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-500 text-white animate-pulse">
+                        Today!
+                      </span>
+                    ) : (
+                      <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-500 text-white">
+                        {daysUntilEvent}
+                      </span>
                     )
                   }
                 </div>
+
+                {event.category && (
+                  <div class="absolute top-4 right-4">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white/90 text-primary border border-primary/20">
+                      {event.category}
+                    </span>
+                  </div>
+                )}
               </div>
 
-              <!-- Location -->
-              {
-                event.data.venue && (
+              <div class="space-y-8">
+                <div>
+                  <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight mb-4">
+                    {event.title}
+                  </h1>
+                </div>
+
+                <div class="grid gap-4">
                   <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
                     <div class="flex items-center gap-3 mb-3">
                       <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                        <span class="text-2xl">📍</span>
+                        <span class="text-2xl">📅</span>
                       </div>
                       <div>
                         <h3 class="font-semibold text-gray-900 dark:text-white">
-                          Location
+                          Date & Time
                         </h3>
                       </div>
                     </div>
-                    <div class="space-y-2">
-                      <p class="text-gray-600 dark:text-gray-400">
-                        {event.data.venue}
-                      </p>
-                      {event.data.map && (
-                        <a
-                          href={event.data.map}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium"
-                        >
-                          <span>📍</span>
-                          <span>View on Map</span>
-                          <span>→</span>
-                        </a>
+                    <div class="space-y-2 text-gray-600 dark:text-gray-400">
+                      <div class="flex items-center gap-2">
+                        <span class="font-medium">Date:</span>
+                        <span>{formatDate(parseISO(event.date))}</span>
+                      </div>
+                      {event.time && (
+                        <div class="flex items-center gap-2">
+                          <span class="font-medium">Time:</span>
+                          <span>{event.time}</span>
+                        </div>
                       )}
                     </div>
                   </div>
-                )
-              }
 
-              <!-- Capacity -->
-              {
-                event.data.maxParticipants && (
+                  {event.venue && (
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                      <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                          <span class="text-2xl">📍</span>
+                        </div>
+                        <div>
+                          <h3 class="font-semibold text-gray-900 dark:text-white">
+                            Location
+                          </h3>
+                        </div>
+                      </div>
+                      <div class="space-y-2">
+                        <p class="text-gray-600 dark:text-gray-400">
+                          {event.venue}
+                        </p>
+                        {event.map && (
+                          <a
+                            href={event.map}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium"
+                          >
+                            <span>📍</span>
+                            <span>View on Map</span>
+                            <span>→</span>
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {event.maxParticipants && (
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                      <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                          <span class="text-2xl">👥</span>
+                        </div>
+                        <div>
+                          <h3 class="font-semibold text-gray-900 dark:text-white">
+                            Capacity
+                          </h3>
+                        </div>
+                      </div>
+                      <p class="text-gray-600 dark:text-gray-400">
+                        Maximum {event.maxParticipants} participants
+                      </p>
+                    </div>
+                  )}
+
                   <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
                     <div class="flex items-center gap-3 mb-3">
                       <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                        <span class="text-2xl">👥</span>
+                        <span class="text-2xl">📝</span>
                       </div>
                       <div>
                         <h3 class="font-semibold text-gray-900 dark:text-white">
-                          Capacity
+                          About This Event
                         </h3>
                       </div>
                     </div>
-                    <p class="text-gray-600 dark:text-gray-400">
-                      Maximum {event.data.maxParticipants} participants
-                    </p>
-                  </div>
-                )
-              }
-
-              <!-- Description -->
-              <div
-                class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700"
-              >
-                <div class="flex items-center gap-3 mb-3">
-                  <div
-                    class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center"
-                  >
-                    <span class="text-2xl">📝</span>
-                  </div>
-                  <div>
-                    <h3 class="font-semibold text-gray-900 dark:text-white">
-                      About This Event
-                    </h3>
+                    <div class="prose prose-sm dark:prose-invert max-w-none text-gray-600 dark:text-gray-400">
+                      {pageRecord?.kind === "content" && Content ? (
+                        <Content />
+                      ) : event.description ? (
+                        <p>{event.description}</p>
+                      ) : dbBody ? (
+                        <p class="whitespace-pre-line">{dbBody}</p>
+                      ) : (
+                        <p>No additional details are available for this event.</p>
+                      )}
+                    </div>
                   </div>
                 </div>
-                <div
-                  class="prose prose-sm dark:prose-invert max-w-none text-gray-600 dark:text-gray-400"
-                >
-                  <Content />
+
+                <div class="flex flex-wrap gap-4 pt-4">
+                  {!eventPassed && (
+                    <a
+                      href="#"
+                      class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium"
+                    >
+                      <span>📝</span>
+                      <span>Register for Event</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
-
-            <!-- Action Buttons -->
-            <div class="flex flex-wrap gap-4 pt-4">
-              {
-                !eventPassed && (
-                  <a
-                    href="#"
-                    class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium"
-                  >
-                    <span>📝</span>
-                    <span>Register for Event</span>
-                  </a>
-                )
-              }
-            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Past Event Notice -->
-  {
-    eventPassed && (
-      <div class="fixed inset-x-0 top-20 flex items-center justify-center z-40">
-        <div class="bg-red-500 text-white px-6 py-3 rounded-full shadow-lg">
-          <span class="font-bold">This event has already passed</span>
+      </section>
+    ) : (
+      <section class="py-24">
+        <div class="container px-4 md:px-6">
+          <div class="max-w-2xl mx-auto text-center">
+            <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              Event not found
+            </h1>
+            <p class="text-gray-600 dark:text-gray-400 mb-8">
+              The event you requested is not available or has not been published yet.
+            </p>
+            <a
+              href="/events"
+              class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium"
+            >
+              Back to events
+            </a>
+          </div>
         </div>
-      </div>
+      </section>
     )
   }
 </Layout>
