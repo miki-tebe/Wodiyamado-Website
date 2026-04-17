@@ -32,9 +32,9 @@ const blogs = defineCollection({
 	}),
 });
 
-// Data collections (YAML without body content)
+// Content collections backed by .mdoc frontmatter files
 const gallery = defineCollection({
-	type: "data",
+	type: "content",
 	schema: z.object({
 		alt: z.string(),
 		image: z.string(),
@@ -42,7 +42,7 @@ const gallery = defineCollection({
 });
 
 const donations = defineCollection({
-	type: "data",
+	type: "content",
 	schema: z.object({
 		name: z.string(),
 		description: z.string(),
