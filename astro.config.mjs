@@ -5,7 +5,6 @@ import keystatic from "@keystatic/astro";
 import markdoc from "@astrojs/markdoc";
 import vercel from "@astrojs/vercel";
 
-import db from "@astrojs/db";
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,7 +15,7 @@ export default defineConfig({
     }),
     markdoc(),
     keystatic(),
-    db(),
+    // db(),
   ],
   output: "server",
   adapter: vercel({

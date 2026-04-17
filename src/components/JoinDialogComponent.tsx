@@ -69,7 +69,7 @@ export function JoinDialog({ openModal }: { openModal: boolean }) {
   return (
     <Dialog defaultOpen={openModal}>
       <DialogTrigger asChild>
-        <Button>Join Us</Button>
+        <Button size="lg" className="hover:scale-105 transition-all duration-200">Join Us</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>

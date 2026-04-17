@@ -1,0 +1,28 @@
+---
+import { getCollection } from "astro:content";
+
+import Layout from "@/layouts/Layout.astro";
+import BlogsPage from "@/components/blogs/BlogsPage";
+import PageHero from "@/components/PageHero";
+
+const blogsCollection = await getCollection("blogs");
+const blogs = blogsCollection.sort(
+  (a: any, b: any) =>
+    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+).map((blog) => ({
+    id: blog.id,
+    slug: blog.id, // Collection entries use id as slug usually, or we can map appropriately
+    data: blog.data
+}));
+---
+
+<Layout title="Blog" description="Blog posts">
+  <div class="min-h-screen">
+    <PageHero
+      title="Our Blogs"
+      description="Read our latest stories, updates, and insights from the team."
+      client:load
+    />
+    <BlogsPage blogs={blogs} client:load />
+  </div>
+</Layout>
