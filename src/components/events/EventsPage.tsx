@@ -1,21 +1,10 @@
+import type { CollectionEntry } from 'astro:content';
 import { useState, useMemo } from 'react';
 import EventsFilterBar from './EventsFilterBar';
 import EventCard from './EventCard';
 import PageHero from '../PageHero';
 
-interface Event {
-  slug?: string;
-  data: {
-    title: string;
-    date: string;
-    time?: string;
-    location?: string;
-    category?: string;
-    description?: string;
-    poster?: string;
-    maxParticipants?: number;
-  };
-}
+type Event = CollectionEntry<'events'>;
 
 interface EventsPageProps {
   events: Event[];
@@ -42,7 +31,7 @@ export default function EventsPage({ events }: EventsPageProps) {
       // Status filter
       let matchesStatus = true;
       if (selectedStatus !== 'all') {
-        const eventDate = new Date(event.data.date);
+        const eventDate = event.data.date;
         eventDate.setHours(23, 59, 59, 999);
         const isPast = eventDate.getTime() < today.getTime();
         const isToday = eventDate.toDateString() === today.toDateString();

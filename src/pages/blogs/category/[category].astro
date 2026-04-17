@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 
 export const prerender = true;
 
@@ -12,13 +12,13 @@ import { capitalizer } from "@/lib/utils";
 export async function getStaticPaths() {
   const allBlogs = await getCollection("blogs");
   const uniqueCategories = [
-    ...new Set(allBlogs.map((blog) => blog.data.category).flat()),
+    ...new Set(allBlogs.map((blog) => blog.data.category)),
   ];
 
   return uniqueCategories.map((category) => {
     const filteredPosts = allBlogs
-      .filter((blog) => blog.data.category.includes(category))
-      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+      .filter((blog) => blog.data.category === category)
+      .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     return {
       params: { category },
       props: { blogs: filteredPosts },
@@ -27,10 +27,7 @@ export async function getStaticPaths() {
 }
 
 const { category } = Astro.params;
-const { blogs } = Astro.props;
-blogs.sort(
-  (a: any, b: any) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-);
+const { blogs } = Astro.props as { blogs: CollectionEntry<"blogs">[] };
 ---
 
 <Layout
@@ -48,7 +45,7 @@ blogs.sort(
       <div
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-9 md:gap-y-16 lg:gap-x-8"
       >
-        {blogs.map((blog: any) => <BlogCard {...blog} />)}
+        {blogs.map((blog) => <BlogCard {...blog} />)}
       </div>
     </section>
   </div>

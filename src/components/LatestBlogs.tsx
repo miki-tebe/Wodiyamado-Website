@@ -1,16 +1,7 @@
+import type { CollectionEntry } from "astro:content";
 import { Button } from "@/components/ui/button";
 
-interface Blog {
-  slug?: string;
-  data: {
-    title: string;
-    date: string;
-    category?: string;
-    description?: string;
-    cover?: string;
-    author: string;
-  };
-}
+type Blog = CollectionEntry<"blogs">;
 
 interface LatestBlogsProps {
   blogs: Blog[];
@@ -48,7 +39,7 @@ export default function LatestBlogs({ blogs }: LatestBlogsProps) {
                     {blog.data.category || "Blog"}
                   </span>
                   <span className="text-sm text-gray-500 dark:text-gray-400">
-                    {new Date(blog.data.date).toLocaleDateString()}
+                    {blog.data.date.toLocaleDateString()}
                   </span>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 line-clamp-2">
@@ -56,7 +47,7 @@ export default function LatestBlogs({ blogs }: LatestBlogsProps) {
                 </h3>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-500 dark:text-gray-400">
-                    By {blog.data.author}
+                    By {blog.data.author || "Wodiyamado"}
                   </span>
                   <a
                     href={`/blogs/${blog.slug}`}

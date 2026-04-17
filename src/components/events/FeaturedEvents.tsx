@@ -1,19 +1,8 @@
+import type { CollectionEntry } from "astro:content";
 import { Button } from "@/components/ui/button";
 import EventCard from "./EventCard";
 
-interface Event {
-  slug?: string;
-  data: {
-    title: string;
-    date: string;
-    time?: string;
-    location?: string;
-    category?: string;
-    description?: string;
-    poster?: string;
-    maxParticipants?: number;
-  };
-}
+type Event = CollectionEntry<"events">;
 
 interface FeaturedEventsProps {
   events: Event[];
@@ -37,7 +26,7 @@ export default function FeaturedEvents({ events }: FeaturedEventsProps) {
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {events.map((eventItem) => {
-            const eventDate = new Date(eventItem.data.date);
+            const eventDate = eventItem.data.date;
             eventDate.setHours(23, 59, 59, 999);
             const isPast = eventDate.getTime() < today.getTime();
             const isToday = eventDate.toDateString() === today.toDateString();

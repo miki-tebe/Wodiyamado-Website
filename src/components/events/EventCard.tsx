@@ -1,20 +1,9 @@
+import type { CollectionEntry } from 'astro:content';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Clock, MapPin, Users } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
-interface Event {
-  slug?: string;
-  data: {
-    title: string;
-    date: string;
-    time?: string;
-    location?: string;
-    category?: string;
-    description?: string;
-    poster?: string;
-    maxParticipants?: number;
-  };
-}
+type Event = CollectionEntry<'events'>;
 
 interface EventCardProps {
   event: Event;
@@ -39,8 +28,8 @@ export default function EventCard({ event, isPast, isToday, isFeatured }: EventC
 
   const getDaysUntilEvent = () => {
     if (isPast) return null;
-    
-    const eventDate = new Date(event.data.date);
+
+    const eventDate = event.data.date;
     const today = new Date();
     const diffTime = eventDate.getTime() - today.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -110,10 +99,10 @@ export default function EventCard({ event, isPast, isToday, isFeatured }: EventC
           </div>
 
           {/* Location */}
-          {event.data.location && (
+          {(event.data.venue || event.data.location) && (
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
               <MapPin className="w-4 h-4" />
-              <span className="line-clamp-1">{event.data.location}</span>
+              <span className="line-clamp-1">{event.data.venue || event.data.location}</span>
             </div>
           )}
 

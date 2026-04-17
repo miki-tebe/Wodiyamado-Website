@@ -17,15 +17,15 @@ const blogs = await getCollection("blogs");
 // Sort by date and get latest
 const recentEvents = events
   .sort(
-    (a: any, b: any) =>
-      new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+    (a, b) =>
+      b.data.date.getTime() - a.data.date.getTime()
   )
   .slice(0, 3);
 
 const recentBlogs = blogs
   .sort(
-    (a: any, b: any) =>
-      new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+    (a, b) =>
+      b.data.date.getTime() - a.data.date.getTime()
   )
   .slice(0, 3);
 

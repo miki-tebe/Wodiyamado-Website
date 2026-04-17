@@ -11,8 +11,12 @@ const events = defineCollection({
 		// Accept string or Date and coerce to Date
 		date: z.coerce.date(),
 		time: z.string().optional(),
+		category: z.string().optional(),
+		description: z.string().optional(),
 		venue: z.string().optional(),
+		location: z.string().optional(),
 		map: z.string().url().optional(),
+		maxParticipants: z.number().optional(),
 	}),
 });
 
@@ -92,4 +96,3 @@ export const collections = {
 	donations,
 		structures,
 };
-

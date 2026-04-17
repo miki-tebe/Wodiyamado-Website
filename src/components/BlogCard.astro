@@ -55,7 +55,7 @@ const blog = Astro.props;
       class="text-sm text-muted-foreground"
       transition:name={"author-" + blog.id}
     >
-      Written by {blog.data.author}
+      Written by {blog.data.author || "Wodiyamado"}
     </p>
   </div>
 </article>

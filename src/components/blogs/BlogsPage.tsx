@@ -1,19 +1,9 @@
+import type { CollectionEntry } from 'astro:content';
 import { useState, useMemo } from 'react';
 import BlogsFilterBar from './BlogsFilterBar';
 import BlogCard from '@/components/BlogCard';
 
-interface Blog {
-    id: string;
-    slug: string;
-    data: {
-        title: string;
-        date: string | Date;
-        category: string;
-        cover: any;
-        author: string;
-        description?: string;
-    };
-}
+type Blog = CollectionEntry<'blogs'>;
 
 interface BlogsPageProps {
     blogs: Blog[];
