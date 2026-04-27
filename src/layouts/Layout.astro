@@ -27,7 +27,7 @@ const year = new Date().getFullYear();
     <title>{title}</title>
     <ClientRouter />
   </head>
-  <body class="flex flex-col min-h-screen">
+  <body class="flex flex-col min-h-screen mt-14">
     <Header logo={icon} client:load />
     <slot />
     <Toaster richColors client:only="react" />
