@@ -4,7 +4,6 @@ import { defineCollection, z } from "astro:content";
 const events = defineCollection({
 	type: "content",
 	schema: z.object({
-		// Keystatic used a slug field for title; here we keep a frontmatter title
 		title: z.string(),
 		// Store public image path as string (we're not using the image() helper since assets live in /public)
 		poster: z.string().optional(),

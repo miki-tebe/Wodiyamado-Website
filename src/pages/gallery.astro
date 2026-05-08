@@ -1,11 +1,11 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import GalleryGrid from "@/components/GalleryGrid";
-import { getCollection } from "astro:content";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/components/PageHero";
+import { getCmsGallery } from "@/lib/emdash-content";
 
-const gallery = await getCollection("gallery");
+const gallery = await getCmsGallery();
 ---
 
 <Layout

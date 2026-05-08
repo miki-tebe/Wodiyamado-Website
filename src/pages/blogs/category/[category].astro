@@ -1,33 +1,15 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
+export const prerender = false;
 
-export const prerender = true;
-
-import BlogCard from "@/components/BlogCard.astro";
+import BlogCard from "@/components/BlogCard";
 import BlogHeader from "@/components/BlogHeader.astro";
 import Layout from "@/layouts/Layout.astro";
 import PageHero from "@/components/PageHero";
+import { getCmsBlogs } from "@/lib/emdash-content";
 import { capitalizer } from "@/lib/utils";
 
-export async function getStaticPaths() {
-  const allBlogs = await getCollection("blogs");
-  const uniqueCategories = [
-    ...new Set(allBlogs.map((blog) => blog.data.category)),
-  ];
-
-  return uniqueCategories.map((category) => {
-    const filteredPosts = allBlogs
-      .filter((blog) => blog.data.category === category)
-      .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-    return {
-      params: { category },
-      props: { blogs: filteredPosts },
-    };
-  });
-}
-
 const { category } = Astro.params;
-const { blogs } = Astro.props as { blogs: CollectionEntry<"blogs">[] };
+const blogs = (await getCmsBlogs()).filter((blog) => blog.data.category === category);
 ---
 
 <Layout
@@ -45,7 +27,7 @@ const { blogs } = Astro.props as { blogs: CollectionEntry<"blogs">[] };
       <div
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-9 md:gap-y-16 lg:gap-x-8"
       >
-        {blogs.map((blog) => <BlogCard {...blog} />)}
+        {blogs.map((blog) => <BlogCard id={blog.slug} data={blog.data} />)}
       </div>
     </section>
   </div>

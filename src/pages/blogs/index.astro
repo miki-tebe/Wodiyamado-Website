@@ -1,14 +1,10 @@
 ---
-import { getCollection } from "astro:content";
-
 import Layout from "@/layouts/Layout.astro";
 import BlogsPage from "@/components/blogs/BlogsPage";
 import PageHero from "@/components/PageHero";
+import { getCmsBlogs } from "@/lib/emdash-content";
 
-const blogsCollection = await getCollection("blogs");
-const blogs = blogsCollection.sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime()
-);
+const blogs = await getCmsBlogs();
 ---
 
 <Layout title="Blog" description="Blog posts">

@@ -1,10 +1,10 @@
-import type { CollectionEntry } from "astro:content";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
+import type { CmsBlog } from "@/lib/emdash-content";
 
 interface BlogCardProps {
     id: string;
-    data: CollectionEntry<"blogs">["data"];
+    data: CmsBlog;
 }
 
 export default function BlogCard({ id, data }: BlogCardProps) {

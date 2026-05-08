@@ -1,5 +1,7 @@
 # build output
 dist/
+data/
+uploads/
 # generated types
 .astro/
 .vercel/

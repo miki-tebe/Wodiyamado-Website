@@ -1,6 +1,3 @@
-import { getCollection, type CollectionEntry } from "astro:content";
-import { format } from "date-fns";
-
 import {
   compareEventRecords,
   type EventPageRecord,
@@ -8,6 +5,7 @@ import {
   type PublicEvent,
   toPublicEvent,
 } from "./event-types";
+import { createEmdashDb as createCmsDb } from "./emdash-db";
 import { ensureLibsqlSchema, getLibsqlClient, getLibsqlConfig, safeJsonParse } from "./libsql";
 
 interface LibsqlEventRow {
@@ -31,32 +29,6 @@ interface LibsqlEventRow {
   body: string | null;
   created_at: string;
   updated_at: string;
-}
-
-function toDateString(date: Date) {
-  return format(date, "yyyy-MM-dd");
-}
-
-function mapContentEvent(entry: CollectionEntry<"events">): EventRecord {
-  return {
-    slug: entry.slug,
-    title: entry.data.title,
-    date: toDateString(entry.data.date),
-    time: entry.data.time ?? null,
-    category: entry.data.category ?? null,
-    description: entry.data.description ?? null,
-    venue: entry.data.venue ?? null,
-    location: entry.data.location ?? null,
-    map: entry.data.map ?? null,
-    poster: entry.data.poster ?? null,
-    maxParticipants: entry.data.maxParticipants ?? null,
-    tags: [],
-    status: "published",
-    source: "content",
-    body: entry.body ?? null,
-    sourceKey: `content:${entry.slug}`,
-    sourceMetadata: {},
-  };
 }
 
 function mapDatabaseEvent(row: LibsqlEventRow): EventRecord {
@@ -84,20 +56,91 @@ function mapDatabaseEvent(row: LibsqlEventRow): EventRecord {
   };
 }
 
+function parseJson<T>(value: unknown): T | null {
+  if (!value || typeof value !== "string") return null;
+  try {
+    return JSON.parse(value) as T;
+  } catch {
+    return null;
+  }
+}
+
+function imageSrc(value: unknown) {
+  if (typeof value === "string" && value.startsWith("/")) return value;
+  return parseJson<{ src?: string }>(value)?.src ?? null;
+}
+
+function dateString(value: unknown) {
+  if (!value) return null;
+  const date = new Date(String(value));
+  if (Number.isNaN(date.valueOf())) return String(value);
+  return date.toISOString().slice(0, 10);
+}
+
+function plainTextFromPortableText(value: unknown) {
+  const blocks = parseJson<Array<{ children?: Array<{ text?: string }> }>>(value);
+  if (!blocks) return null;
+  return blocks
+    .map((block) => block.children?.map((child) => child.text ?? "").join("") ?? "")
+    .filter(Boolean)
+    .join("\n\n");
+}
+
+function mapEmdashEvent(row: Record<string, unknown>): EventRecord {
+  return {
+    slug: String(row.slug),
+    title: String(row.title ?? ""),
+    date: dateString(row.date),
+    time: row.time ? String(row.time) : null,
+    category: row.category ? String(row.category) : null,
+    description: row.description ? String(row.description) : null,
+    venue: row.venue ? String(row.venue) : null,
+    location: row.location ? String(row.location) : null,
+    map: row.map ? String(row.map) : null,
+    poster: imageSrc(row.poster),
+    maxParticipants: row.max_participants ? Number(row.max_participants) : null,
+    tags: [],
+    status: row.status === "published" ? "published" : "draft",
+    source: "emdash",
+    body: plainTextFromPortableText(row.content),
+    sourceKey: `emdash:${row.id}`,
+    sourceMetadata: {},
+  };
+}
+
+async function loadEmdashEventRecords(): Promise<EventRecord[]> {
+  const db = createCmsDb();
+  try {
+    const rows = await db
+      .selectFrom("ec_events")
+      .selectAll()
+      .where("status", "=", "published")
+      .where("deleted_at", "is", null)
+      .execute();
+
+    return rows.map((row) => mapEmdashEvent(row as Record<string, unknown>));
+  } finally {
+    await db.destroy();
+  }
+}
+
 export function toPublicListEvent(event: EventRecord): PublicEvent | null {
   return toPublicEvent(event);
 }
 
 export async function loadMergedEventRecords() {
-  const [contentEvents, dbEvents] = await Promise.all([
-    getCollection("events"),
+  const [emdashEvents, dbEvents] = await Promise.all([
+    loadEmdashEventRecords(),
     loadDatabaseEventRecords(),
   ]);
 
   const records = new Map<string, EventRecord>();
 
-  for (const entry of contentEvents) {
-    records.set(entry.slug, mapContentEvent(entry));
+  for (const event of emdashEvents) {
+    if (event.status !== "published" || !event.date) {
+      continue;
+    }
+    records.set(event.slug, event);
   }
 
   for (const event of dbEvents) {
@@ -118,8 +161,8 @@ export async function getPublicEvents() {
 }
 
 export async function getEventPageRecordBySlug(slug: string): Promise<EventPageRecord | null> {
-  const [contentEvents, dbEvents] = await Promise.all([
-    getCollection("events"),
+  const [emdashEvents, dbEvents] = await Promise.all([
+    loadEmdashEventRecords(),
     loadDatabaseEventRecords(),
   ]);
 
@@ -138,21 +181,20 @@ export async function getEventPageRecordBySlug(slug: string): Promise<EventPageR
     };
   }
 
-  const contentEvent = contentEvents.find((entry) => entry.slug === slug);
-  if (!contentEvent) {
+  const emdashEvent = emdashEvents.find((event) => event.slug === slug);
+  if (!emdashEvent) {
     return null;
   }
 
-  const mapped = mapContentEvent(contentEvent);
-  const publicEvent = toPublicEvent(mapped);
+  const publicEvent = toPublicEvent(emdashEvent);
   if (!publicEvent) {
     return null;
   }
 
   return {
-    kind: "content",
+    kind: "emdash",
     event: publicEvent,
-    entry: contentEvent,
+    body: emdashEvent.body ?? null,
   };
 }
 

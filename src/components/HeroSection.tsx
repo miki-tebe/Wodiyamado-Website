@@ -4,11 +4,13 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import type { CmsEntry, CmsGalleryItem, CmsSiteStat } from "@/lib/emdash-content";
 
 
 interface HeroSectionProps {
   openModal: boolean;
-  gallery: any
+  gallery: CmsEntry<CmsGalleryItem>[];
+  stats: CmsEntry<CmsSiteStat>[];
 }
 
 // Custom hook for counting animation
@@ -47,7 +49,7 @@ function useCountAnimation(end: number, duration: number = 2) {
 }
 
 
-export default function HeroSection({ openModal, gallery }: HeroSectionProps) {
+export default function HeroSection({ openModal, gallery, stats }: HeroSectionProps) {
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
       {/* Carousel background */}
@@ -62,7 +64,7 @@ export default function HeroSection({ openModal, gallery }: HeroSectionProps) {
             ]
           }>
           <CarouselContent className="h-full ml-0">
-            {gallery.map((image: any, index: number) => (
+            {gallery.map((image, index) => (
               <CarouselItem key={index} className="w-full h-full pl-0">
                 <img
                   src={image.data.image}
@@ -125,24 +127,14 @@ export default function HeroSection({ openModal, gallery }: HeroSectionProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold mb-2">
-                <AnimatedCounter end={50} suffix="+" />
+            {stats.map((stat) => (
+              <div className="text-center" key={stat.slug}>
+                <div className="text-3xl md:text-4xl font-bold mb-2">
+                  <AnimatedCounter end={stat.data.value} suffix={stat.data.suffix || ""} />
+                </div>
+                <div className="text-sm">{stat.data.label}</div>
               </div>
-              <div className="text-sm">Active Members</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold mb-2">
-                <AnimatedCounter end={100} suffix="+" />
-              </div>
-              <div className="text-sm">Events Hosted</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold mb-2">
-                <AnimatedCounter end={10} suffix="+" />
-              </div>
-              <div className="text-sm">Years Active</div>
-            </div>
+            ))}
           </motion.div>
         </div>
       </div>

@@ -1,9 +1,9 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import DonationCard from "@/components/DonationCard.tsx";
-import { getCollection } from "astro:content";
+import { getCmsDonations } from "@/lib/emdash-content";
 
-const donations = await getCollection("donations");
+const donations = await getCmsDonations();
 ---
 
 <Layout

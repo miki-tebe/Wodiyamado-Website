@@ -6,12 +6,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { CollectionEntry } from "astro:content";
+import type { CmsEntry, CmsStructure } from "@/lib/emdash-content";
 
 function ClubStructure({
   structures,
 }: {
-  structures: CollectionEntry<"structures">[];
+  structures: CmsEntry<CmsStructure>[];
 }) {
   const [year, setYear] = useState(new Date().getFullYear().toString());
   let currentStructure = structures.find((structure) =>

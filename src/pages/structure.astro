@@ -1,11 +1,10 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import ClubStructure from "@/components/ClubStructureComponent.tsx";
-import { getCollection } from "astro:content";
 import PageHero from "@/components/PageHero";
+import { getCmsStructures } from "@/lib/emdash-content";
 
-const structures = await getCollection("structures");
-structures.reverse();
+const structures = await getCmsStructures();
 ---
 
 <Layout

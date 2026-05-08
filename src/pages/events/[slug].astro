@@ -1,7 +1,6 @@
 ---
 export const prerender = false;
 
-import { render } from "astro:content";
 import { parseISO } from "date-fns";
 
 import Layout from "@/layouts/Layout.astro";
@@ -20,9 +19,7 @@ if (!pageRecord) {
 }
 
 const event = pageRecord?.event;
-const contentEntry = pageRecord?.kind === "content" ? pageRecord.entry : null;
-const dbBody = pageRecord?.kind === "typefully" ? pageRecord.body : null;
-const { Content } = contentEntry ? await render(contentEntry) : { Content: null };
+const body = pageRecord?.body ?? null;
 
 function hasEventPassed(eventDate: string) {
   const currentDate = new Date();
@@ -205,12 +202,10 @@ const daysUntilEvent = event ? getDaysUntilEvent(event.date) : "";
                       </div>
                     </div>
                     <div class="prose prose-sm dark:prose-invert max-w-none text-gray-600 dark:text-gray-400">
-                      {pageRecord?.kind === "content" && Content ? (
-                        <Content />
-                      ) : event.description ? (
+                      {event.description ? (
                         <p>{event.description}</p>
-                      ) : dbBody ? (
-                        <p class="whitespace-pre-line">{dbBody}</p>
+                      ) : body ? (
+                        <p class="whitespace-pre-line">{body}</p>
                       ) : (
                         <p>No additional details are available for this event.</p>
                       )}

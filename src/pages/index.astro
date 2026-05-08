@@ -6,26 +6,17 @@ import HeroSection from "@/components/HeroSection";
 import FeaturedEvents from "@/components/events/FeaturedEvents";
 import StructurePreview from "@/components/StructurePreview";
 import LatestBlogs from "@/components/LatestBlogs";
-import { getCollection } from "astro:content";
 import { getPublicEvents } from "@/lib/events-store";
+import { getCmsBlogs, getCmsGallery, getCmsSiteStats } from "@/lib/emdash-content";
 
 const openModal = Astro.url.searchParams.get("modal") == "true" ? true : false;
 
-// Get recent events and blogs
-const blogs = await getCollection("blogs");
 const events = await getPublicEvents();
 
-// Sort by date and get latest
 const recentEvents = events.slice(0, 3);
-
-const recentBlogs = blogs
-  .sort(
-    (a, b) =>
-      b.data.date.getTime() - a.data.date.getTime()
-  )
-  .slice(0, 3);
-
-const gallery = await getCollection("gallery");
+const recentBlogs = await getCmsBlogs(3);
+const gallery = await getCmsGallery();
+const stats = await getCmsSiteStats();
 ---
 
 <Layout
@@ -33,7 +24,7 @@ const gallery = await getCollection("gallery");
   description="We are a group of young leaders dedicated to improving our communities through service."
 >
   <main class="flex-1">
-    <HeroSection gallery={gallery} openModal={openModal} client:load />
+    <HeroSection gallery={gallery} stats={stats} openModal={openModal} client:load />
     <FeaturedEvents events={recentEvents} client:load />
     <LatestBlogs blogs={recentBlogs} client:load />
     <StructurePreview client:load />

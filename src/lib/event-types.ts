@@ -1,6 +1,4 @@
-import type { CollectionEntry } from "astro:content";
-
-export type EventSource = "content" | "typefully";
+export type EventSource = "emdash" | "typefully";
 export type EventStatus = "draft" | "published";
 
 export interface EventRecord {
@@ -42,9 +40,9 @@ export interface PublicEvent {
 
 export type EventPageRecord =
   | {
-      kind: "content";
+      kind: "emdash";
       event: PublicEvent;
-      entry: CollectionEntry<"events">;
+      body?: string | null;
     }
   | {
       kind: "typefully";

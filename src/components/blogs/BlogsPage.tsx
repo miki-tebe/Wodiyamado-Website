@@ -1,9 +1,9 @@
-import type { CollectionEntry } from 'astro:content';
 import { useState, useMemo } from 'react';
 import BlogsFilterBar from './BlogsFilterBar';
 import BlogCard from '@/components/BlogCard';
+import type { CmsBlog, CmsEntry } from '@/lib/emdash-content';
 
-type Blog = CollectionEntry<'blogs'>;
+type Blog = CmsEntry<CmsBlog>;
 
 interface BlogsPageProps {
     blogs: Blog[];
@@ -39,7 +39,7 @@ export default function BlogsPage({ blogs }: BlogsPageProps) {
                 <div className="container px-4 md:px-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-9 md:gap-y-11 lg:gap-y-16 lg:gap-x-8">
                         {filteredBlogs.map((blog) => (
-                            <BlogCard key={blog.id} id={blog.id} data={blog.data} />
+                            <BlogCard key={blog.id} id={blog.slug} data={blog.data} />
                         ))}
                     </div>
 

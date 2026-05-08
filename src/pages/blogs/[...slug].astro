@@ -1,29 +1,124 @@
 ---
-export const prerender = true;
+export const prerender = false;
 
-import BlogPostLayout from "@/layouts/blog-post.astro";
-import { getCollection, type CollectionEntry, render } from "astro:content";
+import { ChevronLeft } from "lucide-react";
+import { getEmDashEntry, type PortableTextBlock } from "emdash";
 
-export async function getStaticPaths() {
-  const posts = await getCollection("blogs");
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: post,
-  }));
+import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
+import Layout from "@/layouts/Layout.astro";
+import { cn, formatDate } from "@/lib/utils";
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  Astro.response.status = 404;
 }
 
-const post = Astro.props as CollectionEntry<"blogs">;
-const slug = Astro.params.slug;
-const { Content } = await render(post);
+const { entry: post } = slug ? await getEmDashEntry("posts", slug) : { entry: null };
 
-if (!slug || !post) {
-  return new Response(null, {
-    status: 404,
-    statusText: "Not found",
-  });
+if (!post) {
+  Astro.response.status = 404;
+}
+
+const title = post?.data.title ?? "Post not found";
+const description = post?.data.excerpt ?? title;
+const featuredImage = post?.data.featured_image?.src;
+const content = post?.data.content ?? [];
+const publishedAt = post?.data.publishedAt ? new Date(post.data.publishedAt) : null;
+
+function escapeHtml(value: unknown) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function blockText(block: PortableTextBlock) {
+  if (!("children" in block) || !Array.isArray(block.children)) return "";
+  return block.children.map((child) => ("text" in child ? child.text : "")).join("");
+}
+
+function escapeAttribute(value: unknown) {
+  return escapeHtml(value).replace(/'/g, "&#39;");
+}
+
+function renderInlineMarkdown(value: string) {
+  return escapeHtml(value)
+    .replace(/&amp;nbsp;/g, "&nbsp;")
+    .replace(/\\\n/g, "<br />")
+    .replace(/\*\*(.+?)\*\*/gs, "<strong>$1</strong>")
+    .replace(/(^|[^\*])\*([^\*]+?)\*/gs, "$1<em>$2</em>")
+    .replace(
+      /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
+      (_, label: string, href: string) =>
+        `<a href="${escapeAttribute(href)}" rel="noreferrer">${label}</a>`,
+    );
+}
+
+function renderPortableText(blocks: PortableTextBlock[]) {
+  return blocks
+    .map((block) => {
+      if (block._type !== "block") return "";
+
+      const text = renderInlineMarkdown(blockText(block));
+      if (!text) return "";
+
+      if (block.style === "h1") return `<h1>${text}</h1>`;
+      if (block.style === "h2") return `<h2>${text}</h2>`;
+      if (block.style === "h3") return `<h3>${text}</h3>`;
+      return `<p>${text}</p>`;
+    })
+    .filter(Boolean)
+    .join("\n");
 }
 ---
 
-<BlogPostLayout {...post}>
-  <Content />
-</BlogPostLayout>
+<Layout title={title} description={description}>
+  {
+    post ? (
+      <div class="relative container max-w-screen-md mt-12 py-10">
+        <button
+          onclick="history.back()"
+          class={cn(
+            buttonVariants({ variant: "ghost" }),
+            "absolute left-[-200px] top-10 hidden xl:inline-flex text-muted-foreground"
+          )}
+          transition:animate="slide"
+        >
+          <ChevronLeft className="mr-2 size-4" /> Back
+        </button>
+
+        <article class="prose dark:prose-invert max-w-none">
+          <a href="/blogs">
+            <Badge className="capitalize">Blog</Badge>
+          </a>
+          {featuredImage && (
+            <img
+              class="rounded-xl overflow-hidden my-6 w-full"
+              width="720"
+              height="360"
+              src={featuredImage}
+              alt={title}
+            />
+          )}
+          <div class="flex items-center justify-between">
+            {publishedAt && (
+              <span class="font-medium text-muted-foreground">
+                {formatDate(publishedAt)}
+              </span>
+            )}
+          </div>
+          <h1 class="font-heading text-4xl my-4">{title}</h1>
+          <hr class="my-6" />
+          <div set:html={renderPortableText(content)} />
+        </article>
+      </div>
+    ) : (
+      <div class="container max-w-screen-md mt-12 py-10">
+        <h1 class="font-heading text-4xl my-4">Post not found</h1>
+      </div>
+    )
+  }
+</Layout>

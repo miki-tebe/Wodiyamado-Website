@@ -1,7 +1,7 @@
-import type { CollectionEntry } from "astro:content";
 import { Button } from "@/components/ui/button";
+import type { CmsBlog, CmsEntry } from "@/lib/emdash-content";
 
-type Blog = CollectionEntry<"blogs">;
+type Blog = CmsEntry<CmsBlog>;
 
 interface LatestBlogsProps {
   blogs: Blog[];
@@ -23,7 +23,7 @@ export default function LatestBlogs({ blogs }: LatestBlogsProps) {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {blogs.map((blog) => (
-            <div key={blog.slug} className="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div key={blog.id} className="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               {blog.data.cover && (
                 <div className="aspect-[16/11] overflow-hidden">
                   <img

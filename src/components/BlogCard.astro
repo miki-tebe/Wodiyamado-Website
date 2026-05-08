@@ -7,11 +7,12 @@ import type { CollectionEntry } from "astro:content";
 type Props = CollectionEntry<"blogs">;
 
 const blog = Astro.props;
+const slug = blog.id.replace(/\.(mdoc|md)$/, "");
 ---
 
 <article class="group space-y-4">
   <a
-    href={`/blogs/${blog.id}/`}
+    href={`/blogs/${slug}/`}
     class="flex h-52 group-hover:-translate-y-2 group-hover:shadow-xl transition duration-300"
   >
     <Image
@@ -43,7 +44,7 @@ const blog = Astro.props;
   </div>
 
   <div>
-    <a href={`/blogs/${blog.id}/`} class="group-hover:underline">
+    <a href={`/blogs/${slug}/`} class="group-hover:underline">
       <h2
         class="font-heading text-xl md:text-2xl leading-snug line-clamp-3"
         transition:name={"title-" + blog.id}

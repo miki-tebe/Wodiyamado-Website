@@ -1,12 +1,11 @@
 ---
-import { getCollection } from "astro:content";
-
 import { buttonVariants } from "@/components/ui/button";
+import { getCmsBlogs } from "@/lib/emdash-content";
 import { cn } from "@/lib/utils";
 
-const blogs = await getCollection("blogs");
+const blogs = await getCmsBlogs();
 const categories = [
-  ...new Set(blogs.map((blog: any) => blog.data.category).flat()),
+  ...new Set(blogs.map((blog) => blog.data.category).flat()),
 ];
 
 type Props = {
