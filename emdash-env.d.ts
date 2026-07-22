@@ -153,6 +153,7 @@ export interface ClubStructure {
   membership_and_retention_director_image?: { id: string; src?: string; alt?: string; width?: number; height?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> };
   immediate_past_president?: string;
   immediate_past_president_image?: { id: string; src?: string; alt?: string; width?: number; height?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> };
+  members?: string;
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;

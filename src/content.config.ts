@@ -52,6 +52,8 @@ const structures = defineCollection({
 	type: "data",
 		schema: z.object({
 			// year comes from the filename (slug) in current content, so it's not required in YAML
+			// Newer boards use an ordered JSON member list so exact roles can be preserved.
+			members: z.string().optional(),
 			president: z.string().optional(),
 			president_image: z.string().optional(),
 			vicePresident: z.string().optional(),

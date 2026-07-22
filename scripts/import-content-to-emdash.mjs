@@ -8,6 +8,7 @@ const root = process.cwd();
 const contentDir = path.join(root, "src/content");
 
 const roleFields = [
+  ["members", "Board Members (JSON)", "text"],
   ["president", "President", "string"],
   ["president_image", "President Image", "image"],
   ["vice_president", "Vice President", "string"],
@@ -370,7 +371,11 @@ async function buildSeed() {
         };
         for (const [sourceKey, value] of Object.entries(entry.data)) {
           const targetKey = camelToSnake.get(sourceKey) || sourceKey;
-          data[targetKey] = targetKey.endsWith("_image") ? imageValue(value, data[targetKey]) : value;
+          data[targetKey] = targetKey.endsWith("_image")
+            ? imageValue(value, data[targetKey])
+            : targetKey === "members" && typeof value !== "string"
+              ? JSON.stringify(value)
+              : value;
         }
         return {
           id: `structure:${entry.slug}`,

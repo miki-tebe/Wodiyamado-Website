@@ -33,7 +33,16 @@ export interface CmsDonation {
   description: string;
 }
 
-export type CmsStructure = Record<string, string | undefined>;
+export interface CmsBoardMember {
+  name: string;
+  role: string;
+  image?: string;
+}
+
+export type CmsStructure = Record<
+  string,
+  string | CmsBoardMember[] | undefined
+>;
 
 export interface CmsSiteStat {
   label: string;
@@ -219,6 +228,8 @@ export async function getCmsStructures() {
         const value = row[source];
         data[target] = target.endsWith("_image") ? imageSrc(value) : value ? String(value) : undefined;
       }
+      const members = parseJson<CmsBoardMember[]>(row.members);
+      if (members) data.members = members;
 
       return {
         id: String(row.slug),

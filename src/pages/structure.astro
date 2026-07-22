@@ -2,9 +2,34 @@
 import Layout from "@/layouts/Layout.astro";
 import ClubStructure from "@/components/ClubStructureComponent.tsx";
 import PageHero from "@/components/PageHero";
-import { getCmsStructures } from "@/lib/emdash-content";
+import currentBoardSource from "@/content/structures/2026-2027.yaml?raw";
+import {
+  getCmsStructures,
+  type CmsBoardMember,
+  type CmsEntry,
+  type CmsStructure,
+} from "@/lib/emdash-content";
 
-const structures = await getCmsStructures();
+const cmsStructures = await getCmsStructures();
+const currentBoardMembers = JSON.parse(
+  currentBoardSource
+    .replace(/^members:\s*>-\s*/, "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .join(" "),
+) as CmsBoardMember[];
+const currentBoard = {
+  id: "2026-2027",
+  slug: "2026-2027",
+  data: { members: currentBoardMembers },
+} satisfies CmsEntry<CmsStructure>;
+
+// Keep the checked-in current board authoritative so a deployment does not
+// depend on a separate remote CMS import. Older boards continue to come from CMS.
+const structures = Array.from(
+  new Map([...cmsStructures, currentBoard].map((entry) => [entry.id, entry])).values(),
+).sort((a, b) => b.id.localeCompare(a.id));
 ---
 
 <Layout
