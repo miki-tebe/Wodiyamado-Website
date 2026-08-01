@@ -17,6 +17,14 @@ const emdashAuthToken =
   process.env.TURSO_AUTH_TOKEN ||
   process.env.DATABASE_AUTH_TOKEN;
 
+const isVercel = process.env.VERCEL === "1";
+const emdashSiteUrl = process.env.EMDASH_SITE_URL || process.env.SITE_URL || "https://racwodiyamado.et";
+const sessionDriver = isVercel
+  ? sessionDrivers.vercelRuntimeCache()
+  : sessionDrivers.fs({
+      base: "./data/sessions",
+    });
+
 const emdashStorage =
   process.env.S3_ENDPOINT && process.env.S3_BUCKET
     ? s3()
@@ -28,13 +36,11 @@ const emdashStorage =
 // https://astro.build/config
 export default defineConfig({
   session: {
-    driver: sessionDrivers.fs({
-      base: "./data/sessions",
-    }),
+    driver: sessionDriver,
     cookie: {
       name: "astro-session",
       sameSite: "lax",
-      secure: false,
+      secure: isVercel,
       httpOnly: true,
     },
   },
@@ -45,6 +51,7 @@ export default defineConfig({
       database: emdashDatabaseUrl
         ? libsql({ url: emdashDatabaseUrl, authToken: emdashAuthToken })
         : sqlite({ url: "file:./data/emdash.db" }),
+      siteUrl: emdashSiteUrl,
       storage: emdashStorage,
       plugins: [],
       fonts: {
