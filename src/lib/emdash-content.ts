@@ -132,6 +132,7 @@ export async function getCmsGallery(limit?: number) {
       .selectAll()
       .where("status", "=", "published")
       .where("deleted_at", "is", null)
+      .where("slug", "!=", "green-rotaract-hike")
       .orderBy("published_at", "desc")
       .execute();
 
