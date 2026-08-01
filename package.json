@@ -12,6 +12,7 @@
     "backfill:post-dates": "npm run setup:emdash && node scripts/backfill-post-dates.mjs",
     "seed:site-content": "npm run setup:emdash && node scripts/seed-site-content.mjs",
     "setup:emdash": "node -e \"fs.mkdirSync('./data',{recursive:true});fs.mkdirSync('./uploads',{recursive:true})\"",
+    "postinstall": "node scripts/patch-emdash.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -45,7 +46,7 @@
     "date-fns": "^3.6.0",
     "embla-carousel-autoplay": "^8.3.0",
     "embla-carousel-react": "^8.0.0",
-    "emdash": "^0.10.0",
+    "emdash": "^0.31.1",
     "framer-motion": "^12.23.12",
     "lucide-astro": "^0.396.0",
     "lucide-react": "^0.315.0",

@@ -3,7 +3,7 @@
 
 /// <reference types="emdash/locals" />
 
-import type { ContentBylineCredit, PortableTextBlock } from "emdash";
+import type { ContentBylineCredit, TaxonomyTerm, PortableTextBlock } from "emdash";
 
 export interface Donation {
   id: string;
@@ -17,6 +17,7 @@ export interface Donation {
   updatedAt: Date;
   publishedAt: Date | null;
   bylines?: ContentBylineCredit[];
+  terms?: Record<string, TaxonomyTerm[]>;
 }
 
 export interface Event {
@@ -38,9 +39,10 @@ export interface Event {
   updatedAt: Date;
   publishedAt: Date | null;
   bylines?: ContentBylineCredit[];
+  terms?: Record<string, TaxonomyTerm[]>;
 }
 
-export interface GalleryItem {
+export interface Gallery {
   id: string;
   slug: string | null;
   status: string;
@@ -52,6 +54,7 @@ export interface GalleryItem {
   updatedAt: Date;
   publishedAt: Date | null;
   bylines?: ContentBylineCredit[];
+  terms?: Record<string, TaxonomyTerm[]>;
 }
 
 export interface Page {
@@ -64,6 +67,7 @@ export interface Page {
   updatedAt: Date;
   publishedAt: Date | null;
   bylines?: ContentBylineCredit[];
+  terms?: Record<string, TaxonomyTerm[]>;
 }
 
 export interface Post {
@@ -79,6 +83,7 @@ export interface Post {
   updatedAt: Date;
   publishedAt: Date | null;
   bylines?: ContentBylineCredit[];
+  terms?: Record<string, TaxonomyTerm[]>;
 }
 
 export interface SiteStat {
@@ -94,6 +99,7 @@ export interface SiteStat {
   updatedAt: Date;
   publishedAt: Date | null;
   bylines?: ContentBylineCredit[];
+  terms?: Record<string, TaxonomyTerm[]>;
 }
 
 export interface SocialLink {
@@ -113,9 +119,10 @@ export interface SocialLink {
   updatedAt: Date;
   publishedAt: Date | null;
   bylines?: ContentBylineCredit[];
+  terms?: Record<string, TaxonomyTerm[]>;
 }
 
-export interface ClubStructure {
+export interface Structure {
   id: string;
   slug: string | null;
   status: string;
@@ -158,17 +165,18 @@ export interface ClubStructure {
   updatedAt: Date;
   publishedAt: Date | null;
   bylines?: ContentBylineCredit[];
+  terms?: Record<string, TaxonomyTerm[]>;
 }
 
 declare module "emdash" {
   interface EmDashCollections {
     donations: Donation;
     events: Event;
-    gallery: GalleryItem;
+    gallery: Gallery;
     pages: Page;
     posts: Post;
     site_stats: SiteStat;
     social_links: SocialLink;
-    structures: ClubStructure;
+    structures: Structure;
   }
 }
